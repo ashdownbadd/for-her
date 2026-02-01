@@ -1,0 +1,114 @@
+#radio-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    
+    background: rgba(0, 0, 0, 0.01) !important; 
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    
+    z-index: 2000;
+    display: none;
+    justify-content: center;
+    /* Changed from center to flex-end to move to bottom */
+    align-items: flex-end; 
+    /* Spacing from the bottom edge */
+    padding-bottom: 50px; 
+    cursor: pointer;
+}
+
+#radio-wrapper.active {
+    display: flex;
+}
+
+#radio-ui {
+    pointer-events: auto;
+    cursor: default;
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.radio-transparent-container {
+    width: 400px;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Changed color to white */
+    color: #ffffff; 
+}
+
+.minimal-text {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    /* Adjusted shadow for white text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+}
+
+.minimal-playback {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.minimal-time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 8px;
+    font-family: monospace;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.minimal-progress-bg {
+    width: 100%;
+    /* Increased thickness */
+    height: 4px; 
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.minimal-progress-bar {
+    width: 0%;
+    height: 100%;
+    /* Changed to white */
+    background: #ffffff; 
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+}
+
+.minimal-controls {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    /* Changed color to white */
+    color: #ffffff; 
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.icon-btn:hover {
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+.play-trigger {
+    font-size: 32px;
+}

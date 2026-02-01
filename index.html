@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="assets/css/photos.css">
     <link rel="stylesheet" href="assets/css/clock.css">
     <link rel="stylesheet" href="assets/css/letter.css">
+    <link rel="stylesheet" href="assets/css/radio.css">
 
     <style>
         * {
@@ -250,14 +251,11 @@
                 <div class="part part1">
                     <h2>Dear Baby,</h2>
                     <p>
-                        Valentine's Day is here once more,<br>
-                        and I refuse to let it pass again empty-handed.
+                        Valentine's Day is here once more, and I refuse to let it pass again empty-handed.
                     </p>
 
                     <div class="part part2">
-                        <p>
-                            So here's something for you —<br>
-                            it took me a while. Even so, it's for you.
+                        <p>So here's something for you—it took me a while. Even so, it's for you.
                         </p>
 
                         <div class="part part3">
@@ -265,6 +263,33 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="radio-audio" src="assets/17.mp3" preload="metadata" loop></audio>
+
+    <div id="radio-wrapper" class="phone-overlay" onclick="window.closeRadioUI()">
+        <div id="radio-ui" class="radio-transparent-container" onclick="event.stopPropagation()">
+
+            <h3 id="song-title" class="minimal-text">Loading</h3>
+
+            <div class="minimal-playback">
+                <div class="minimal-time">
+                    <span id="current-time">0:00</span>
+                    <span id="total-duration">0:00</span>
+                </div>
+                <div class="minimal-progress-bg" onclick="window.seekAudio(event)">
+                    <div class="minimal-progress-bar" id="audio-progress"></div>
+                </div>
+            </div>
+
+            <div class="minimal-controls">
+                <button class="icon-btn"><i class="fa-solid fa-backward"></i></button>
+                <button class="icon-btn play-trigger" onclick="window.toggleRadioPlay()">
+                    <i id="play-icon" class="fa-solid fa-play"></i>
+                </button>
+                <button class="icon-btn"><i class="fa-solid fa-forward"></i></button>
             </div>
         </div>
     </div>
