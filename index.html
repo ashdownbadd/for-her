@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for u</title>
+
+    <link rel="icon" href="assets/svg/logo.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/hotspot.css">
+    <link rel="stylesheet" href="assets/css/instruction.css">
+    <link rel="stylesheet" href="assets/css/phone.css">
+    <link rel="stylesheet" href="assets/css/photos.css">
+    <link rel="stylesheet" href="assets/css/clock.css">
+    <link rel="stylesheet" href="assets/css/letter.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="hotspots-layer" class="hotspot-container"></div>
+
+    <div class="interaction-hint">
+        <span class="interaction-hint__tag">Drag</span>
+        <span class="interaction-hint__label">Rotate</span>
+        <span class="interaction-hint__tag">Scroll</span>
+        <span class="interaction-hint__label">Zoom</span>
+    </div>
+
+    <div id="phone-wrapper" class="phone-overlay" onclick="closePhoneUI()">
+        <div id="phone-ui" class="phone-modal" onclick="event.stopPropagation()">
+            <div class="phone-modal__frame">
+                <div class="phone-modal__screen">
+
+                    <div class="phone-status-bar">
+                        <span class="phone-status-bar__time" id="clock">11:11</span>
+                        <div class="phone-status-bar__notch"></div>
+                        <div class="phone-status-bar__icons">
+                            <img src="assets/svg/sf-symbols/cellularbars.svg" alt="Signal">
+                            <img src="assets/svg/sf-symbols/wifi.svg" alt="WiFi">
+                            <img src="assets/svg/sf-symbols/battery.50percent.svg" alt="Battery">
+                        </div>
+                    </div>
+
+                    <div class="phone-content">
+                        <div class="phone-content__widgets">
+                            <div class="widget widget--weather">
+                                <div class="widget__content">
+                                    <span class="widget__city" id="weather-city">Locating...</span>
+                                    <span class="widget__temp" id="weather-temp">--°</span>
+                                </div>
+                                <div class="widget__footer">
+                                    <img src="assets/svg/sf-symbols/sun.max.fill.svg" id="weather-icon"
+                                        class="widget__weather-icon" alt="Weather Icon">
+                                    <span class="widget__condition" id="weather-condition">--</span>
+                                    <span class="widget__range" id="weather-range">H:--° L:--°</span>
+                                </div>
+                            </div>
+
+                            <div class="widget widget--calendar">
+                                <div class="widget__header">
+                                    <span class="widget__day" id="calendar-day"></span>
+                                    <span class="widget__date" id="calendar-date"></span>
+                                </div>
+                                <div class="widget__event" id="calendar-event-container">
+                                    <div class="widget__event-indicator"></div>
+                                    <div class="widget__event-details">
+                                        <span class="widget__event-title" id="event-title">Loading events...</span>
+                                        <span class="widget__event-location" id="event-location"></span>
+                                        <span class="widget__event-time" id="event-time"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="phone-content__app-grid">
+                            <div class="app-item">
+                                <div class="app-item__icon">
+                                    <img src="assets/svg/app-icons/messages.svg" class="app-item__svg" alt="Messages">
+                                </div>
+                                <span class="app-item__label">Messages</span>
+                            </div>
+
+                            <div class="app-item" onclick="openPhotosApp()">
+                                <div class="app-item__icon">
+                                    <img src="assets/svg/app-icons/photos.svg" class="app-item__svg" alt="Photos">
+                                </div>
+                                <span class="app-item__label">Photos</span>
+                            </div>
+
+                            <div class="app-item">
+                                <div class="app-item__icon">
+                                    <img src="assets/svg/app-icons/notes.svg" class="app-item__svg" alt="Notes">
+                                </div>
+                                <span class="app-item__label">Notes</span>
+                            </div>
+
+                            <div class="app-item" id="clock-app-trigger" onclick="openClockApp()">
+                                <div class="app-item__icon">
+                                    <img src="assets/svg/app-icons/clock.svg" class="app-item__svg" alt="Clock">
+                                </div>
+                                <span class="app-item__label">Clock</span>
+                            </div>
+                        </div>
+
+                        <div id="photos-app-overlay" class="app-screen">
+                            <div class="photos-app">
+                                <header class="photos-app__header">
+                                    <div class="photos-app__left"></div>
+                                    <div class="photos-app__center">
+                                        <div class="photos-app__title">All Photos</div>
+                                    </div>
+                                    <div class="photos-app__right">
+                                        <button class="photos-app__select-btn">Select</button>
+                                    </div>
+                                </header>
+
+                                <div id="photos-grid" class="photos-app__grid"></div>
+
+                                <nav class="photos-app__nav">
+                                    <div class="photos-app__nav-item photos-app__nav-item--active">
+                                        <img src="assets/svg/sf-symbols/photo.fill.on.rectangle.fill.svg"
+                                            alt="All Photos">
+                                        <span>All Photos</span>
+                                    </div>
+                                    <div class="photos-app__nav-item">
+                                        <img src="assets/svg/sf-symbols/heart.text.square.fill.svg" alt="For You">
+                                        <span>For You</span>
+                                    </div>
+                                    <div class="photos-app__nav-item">
+                                        <img src="assets/svg/sf-symbols/rectangle.stack.fill.svg" alt="Albums">
+                                        <span>Albums</span>
+                                    </div>
+                                    <div class="photos-app__nav-item">
+                                        <img src="assets/svg/sf-symbols/magnifyingglass.svg" alt="Search">
+                                        <span>Search</span>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div id="photo-viewer" class="photo-viewer">
+                            <header class="photo-viewer__header">
+                                <button class="photo-viewer__back" onclick="closePhotoViewer()">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                            </header>
+
+                            <div class="photo-viewer__content">
+                                <img id="full-photo" src="" alt="">
+                            </div>
+
+                            <nav class="photo-nav">
+                                <div class="photo-nav__action">
+                                    <img src="assets/svg/sf-symbols/square.and.arrow.up.svg" alt="Share">
+                                </div>
+                                <div class="photo-nav__group">
+                                    <img src="assets/svg/sf-symbols/heart.svg" alt="Favorite">
+                                    <img src="assets/svg/sf-symbols/info.circle.svg" alt="Info">
+                                    <img src="assets/svg/sf-symbols/slider.horizontal.3.svg" alt="Edit">
+                                </div>
+                                <div class="photo-nav__action">
+                                    <img src="assets/svg/sf-symbols/trash.svg" alt="Delete">
+                                </div>
+                            </nav>
+                        </div>
+
+                        <div id="clock-app-overlay" class="app-screen">
+                            <div id="reset-denial-toast" class="toast-bubble">
+                                We've been together since Nov. 21, 2023... and you want to STOP the clock? Not on my
+                                watch! 😤
+                            </div>
+
+                            <div class="stopwatch">
+                                <div class="stopwatch__display">
+                                    <span id="stopwatch-time" class="stopwatch__time">19244:59:22</span>
+                                </div>
+                                <div class="stopwatch__controls">
+                                    <button class="stopwatch__button stopwatch__button--lap">Lap</button>
+                                    <div class="stopwatch__indicators">
+                                        <span class="stopwatch__dot stopwatch__dot--active"></span>
+                                        <span class="stopwatch__dot"></span>
+                                    </div>
+                                    <button class="stopwatch__button stopwatch__button--stop">Stop</button>
+                                </div>
+                            </div>
+
+                            <nav class="clock-nav">
+                                <div class="clock-nav__item">
+                                    <img src="assets/svg/sf-symbols/globe.svg" class="clock-nav__icon"
+                                        alt="World Clock">
+                                    <span>World Clock</span>
+                                </div>
+                                <div class="clock-nav__item">
+                                    <img src="assets/svg/sf-symbols/alarm.fill.svg" class="clock-nav__icon" alt="Alarm">
+                                    <span>Alarm</span>
+                                </div>
+                                <div class="clock-nav__item clock-nav__item--active">
+                                    <img src="assets/svg/sf-symbols/stopwatch.fill.svg" class="clock-nav__icon"
+                                        alt="Stopwatch">
+                                    <span>Stopwatch</span>
+                                </div>
+                                <div class="clock-nav__item">
+                                    <img src="assets/svg/sf-symbols/timer.svg" class="clock-nav__icon" alt="Timer">
+                                    <span>Timer</span>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="phone-dock">
+                        <div class="app-item__icon">
+                            <img src="assets/svg/app-icons/safari.svg" class="app-item__svg" alt="Safari">
+                        </div>
+                        <div class="app-item__icon">
+                            <img src="assets/svg/app-icons/podcasts.svg" class="app-item__svg" alt="Podcasts">
+                        </div>
+                        <div class="app-item__icon">
+                            <img src="assets/svg/app-icons/mail.svg" class="app-item__svg" alt="Mail">
+                        </div>
+                        <div class="app-item__icon">
+                            <img src="assets/svg/app-icons/settings.svg" class="app-item__svg" alt="Settings">
+                        </div>
+                    </div>
+
+                    <div class="phone-modal__home-indicator"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="letter-wrapper" class="phone-overlay" onclick="window.closeLetterUI()">
+        <div id="letter-ui" class="phone-modal" onclick="event.stopPropagation()">
+            <div class="paper">
+                <div class="part part1">
+                    <h2>Dear Baby,</h2>
+                    <p>
+                        Valentine's Day is here once more,<br>
+                        and I refuse to let it pass again empty-handed.
+                    </p>
+
+                    <div class="part part2">
+                        <p>
+                            So here's something for you —<br>
+                            it took me a while. Even so, it's for you.
+                        </p>
+
+                        <div class="part part3">
+                            <span class="signature">Love, Randall</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/main.js"></script>
+</body>
+
+</html>

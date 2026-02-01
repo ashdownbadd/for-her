@@ -1,0 +1,315 @@
+.phone-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.phone-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.phone-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: default;
+}
+
+.phone-overlay.active .phone-modal {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.phone-modal__frame {
+    position: relative;
+    width: 393px;
+    height: 852px;
+    background: #1a1a1a;
+    border: 12px solid #000;
+    border-radius: 68px;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.phone-modal__screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image: radial-gradient(circle 120px at bottom, rgba(255, 120, 0, 0.8) 0%, rgba(255, 120, 0, 0) 100%),
+        linear-gradient(180deg, #121212 0%, #050505 60%, #000000 100%);
+    overflow: hidden;
+}
+
+.phone-status-bar {
+    position: relative;
+    z-index: 300;
+    width: 100%;
+    height: 50px;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.phone-status-bar__time {
+    width: 60px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phone-status-bar__notch {
+    width: 110px;
+    height: 30px;
+    background: #000;
+    border-radius: 20px;
+}
+
+.phone-status-bar__icons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.phone-status-bar__icons img {
+    height: 12px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.phone-status-bar__icons img[src*="battery.50percent.svg"] {
+    height: 13px;
+}
+
+.phone-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.phone-content__widgets {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.widget {
+    width: 155px;
+    height: 155px;
+    padding: 16px;
+    border-radius: 28px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.widget--weather {
+    background: linear-gradient(180deg, #2daae2 0%, #1c87c9 100%);
+    color: white;
+    justify-content: space-between;
+}
+
+.widget__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.widget__city {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: -2px;
+}
+
+.widget__temp {
+    font-size: 45px;
+    font-weight: 200;
+    line-height: 1;
+}
+
+.widget__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.widget__weather-icon {
+    width: 16px;
+    height: 16px;
+    margin-bottom: 4px;
+}
+
+.widget__condition {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.widget__range {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.widget--calendar {
+    background: #ffffff;
+    color: #000;
+    justify-content: flex-start;
+    gap: 4px;
+}
+
+.widget__day {
+    color: #ff3b30;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: block;
+    line-height: 1;
+}
+
+.widget__date {
+    font-size: 42px;
+    font-weight: 300;
+    display: block;
+    line-height: 1;
+}
+
+.widget__event {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    align-items: flex-start;
+}
+
+.widget__event-indicator {
+    width: 3px;
+    height: 38px;
+    background: #af52de;
+    border-radius: 2px;
+    margin-top: 2px;
+}
+
+.widget__event-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.widget__event-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.1;
+    display: block;
+    margin-top: -1px;
+}
+
+.widget__event-location,
+.widget__event-time {
+    font-size: 12px;
+    font-weight: 400;
+    color: #8e8e93;
+    line-height: 1.2;
+}
+
+.widget--calendar.widget--no-event .widget__event {
+    gap: 0;
+    margin-top: 12px;
+}
+
+.widget--calendar.widget--no-event .widget__event-indicator {
+    display: none;
+}
+
+.widget--calendar.widget--no-event .widget__event-title {
+    font-size: 15px;
+    line-height: 1.2;
+    padding-left: 0;
+    color: #8e8e93;
+    font-weight: 500;
+}
+
+.phone-content__app-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 15px;
+}
+
+.app-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.app-item__icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: transparent;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+
+.app-item__icon:active {
+    transform: scale(0.9);
+}
+
+.app-item__svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.app-item__label {
+    margin-top: 5px;
+    color: white;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.phone-dock {
+    height: 90px;
+    margin: 0 15px 30px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background: rgba(0, 0, 0, 0.048);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 35px;
+    backdrop-filter: blur(12px);
+}
+
+.phone-modal__home-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    width: 135px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    transform: translateX(-50%);
+    z-index: 999;
+    pointer-events: none;
+}
