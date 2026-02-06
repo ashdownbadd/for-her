@@ -1,4 +1,4 @@
-/* Overlay */
+/* Overlay (click area only, visually transparent) */
 #radio-wrapper {
     position: fixed;
     inset: 0;
@@ -13,10 +13,10 @@
     padding-bottom: 40px;
     cursor: pointer;
 
-    /* Soft vignette behind the player */
-    background: radial-gradient(circle at top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.75));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* No visual overlay, keep background clear */
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
 
 #radio-wrapper.active {
