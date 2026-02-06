@@ -117,6 +117,7 @@ const heartParticles = new THREE.Points(heartGeo, heartMat);
 scene.add(heartParticles);
 
 const velocities = Array.from({ length: particleCount }, () => Math.random() * 0.02 + 0.01);
+let cakeWishTimeout = null;
 
 // --- GLOBAL APP LOGIC ---
 window.targetOpacity = 0;
@@ -160,13 +161,36 @@ window.closeLetterUI = () => {
     setTimeout(() => wrapper.style.display = 'none', 500);
 };
 
+// Special \"make a wish\" moment on cake click
+function triggerCakeWish() {
+    // Brighten scene and boost hearts
+    setAmbiance('bright');
+    window.targetOpacity = 0.9;
+
+    // Reset any existing timer so rapid clicks just extend the moment
+    if (cakeWishTimeout) clearTimeout(cakeWishTimeout);
+
+    cakeWishTimeout = setTimeout(() => {
+        // Return to cozy default ambiance
+        setAmbiance('dark');
+
+        // If radio UI isn't open, fade hearts back out
+        const radioWrapper = document.getElementById('radio-wrapper');
+        const radioActive = radioWrapper && radioWrapper.classList.contains('active');
+        if (!radioActive) {
+            window.targetOpacity = 0;
+        }
+    }, 4000);
+}
+
 // --- HOTSPOTS ---
 function addHotspot(mesh, iconClass, offset) {
     const el = document.createElement('div');
     el.className = 'hotspot';
     el.innerHTML = `<i class="${iconClass}"></i>`;
     el.onclick = () => {
-        if (iconClass.includes('fa-mobile-screen-button')) window.openPhoneUI();
+        if (iconClass.includes('fa-cake-candles')) triggerCakeWish();
+        else if (iconClass.includes('fa-mobile-screen-button')) window.openPhoneUI();
         else if (iconClass.includes('fa-envelope-open-text')) window.openLetterUI();
         else if (iconClass.includes('fa-radio')) openRadioUI();
         else alert("Clicked!");
