@@ -24,60 +24,54 @@ import { openRadioUI } from '../../logics/radio.js';
 const hotspotLayer = document.getElementById('hotspots-layer');
 const activeHotspots = [];
 const friction = 0.95;
+const particleCount = 80;
+const velocities = Array.from({ length: particleCount }, () => Math.random() * 0.02 + 0.01);
 
 let rot = 0;
 let velocity = 0;
 let targetDist = 2.5;
 let dist = 20;
 let isDragging = false;
+let lastFrameTime = performance.now();
 
-// Initialize
 initScene();
 initWeather();
 initCalendar();
 
-// Add Objects
 const table = createTable();
 const pinkCloth = createPinkTablecloth();
 const plate = createPlate();
 const cake = createCake();
 const candles = createCandles();
+const phone = createPhone();
+const loveLetter = createLoveLetter();
+const polaroid = createPolaroid(new THREE.Vector3(-1.45, 0.1, 0.9), { x: 0, y: 0.2, z: 0 });
+const radio = createRadio(new THREE.Vector3(2.4, 0.1, -1.6), 11.5);
+const teddy = createToy(new THREE.Vector3(0, 0.12, -1.8), Math.PI);
+const ring = createRingBox(new THREE.Vector3(0, 0.12, 1.8), 0);
+
+phone.position.set(1.5, 0.13, 0.85);
+phone.rotation.y = Math.PI / 2 - 0.5;
+loveLetter.position.set(-1.5, 0.11, -1.0);
+loveLetter.rotation.y = Math.PI / 1.5;
+teddy.scale.set(0.6, 0.6, 0.6);
 
 scene.add(table);
 scene.add(pinkCloth);
 scene.add(plate);
 scene.add(cake);
 scene.add(candles);
-
-const phone = createPhone();
-phone.position.set(1.5, 0.13, 0.85);
-phone.rotation.y = Math.PI / 2 - 0.5;
 scene.add(phone);
-
-const loveLetter = createLoveLetter();
-loveLetter.position.set(-1.5, 0.11, -1.0);
-loveLetter.rotation.y = Math.PI / 1.5;
 scene.add(loveLetter);
-
+scene.add(polaroid);
+scene.add(radio);
+scene.add(teddy);
+scene.add(ring);
 scene.add(createNapkin(new THREE.Vector3(0, 0.13, 2.8), 0));
 scene.add(createNapkin(new THREE.Vector3(0, 0.13, -2.8), Math.PI));
 scene.add(createWineSet(new THREE.Vector3(0.6, 0.11, 2.6), 0));
 scene.add(createWineSet(new THREE.Vector3(-0.6, 0.11, -2.6), Math.PI));
 
-const polaroid = createPolaroid(new THREE.Vector3(-1.45, 0.1, 0.9), { x: 0, y: 0.2, z: 0 });
-scene.add(polaroid);
-
-const radio = createRadio(new THREE.Vector3(2.4, 0.1, -1.6), 11.5);
-scene.add(radio);
-
-const teddy = createToy(new THREE.Vector3(0, 0.12, -1.8), Math.PI);
-teddy.scale.set(0.6, 0.6, 0.6);
-scene.add(teddy);
-
-const ring = createRingBox(new THREE.Vector3(0, 0.12, 1.8), 0);
-scene.add(ring);
-
-// --- 1. CREATE HEART TEXTURE FIRST ---
 const heartCanvas = document.createElement('canvas');
 heartCanvas.width = 64;
 heartCanvas.height = 64;
@@ -90,24 +84,22 @@ ctx.bezierCurveTo(10, 8, 24, 8, 32, 18);
 ctx.bezierCurveTo(40, 8, 54, 8, 54, 20);
 ctx.bezierCurveTo(54, 36, 32, 48, 32, 48);
 ctx.fill();
-const heartTexture = new THREE.CanvasTexture(heartCanvas);
 
-// --- 2. HEART PARTICLE SYSTEM ---
-const particleCount = 80; // More particles for better fullscreen spread
+const heartTexture = new THREE.CanvasTexture(heartCanvas);
 const heartPoints = [];
 for (let i = 0; i < particleCount; i++) {
     heartPoints.push(new THREE.Vector3(
-        (Math.random() - 0.5) * 25, // Wide horizontal spread
-        (Math.random() - 0.5) * 15, // Initial vertical spread
-        (Math.random() - 0.5) * 20  // Depth spread
+        (Math.random() - 0.5) * 25,
+        (Math.random() - 0.5) * 15,
+        (Math.random() - 0.5) * 20
     ));
 }
 
 const heartGeo = new THREE.BufferGeometry().setFromPoints(heartPoints);
 const heartMat = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 0.25,             // Small hearts
-    map: heartTexture,      // Now heartTexture is defined!
+    size: 0.25,
+    map: heartTexture,
     transparent: true,
     opacity: 0,
     alphaTest: 0.01,
@@ -118,9 +110,6 @@ const heartMat = new THREE.PointsMaterial({
 const heartParticles = new THREE.Points(heartGeo, heartMat);
 scene.add(heartParticles);
 
-const velocities = Array.from({ length: particleCount }, () => Math.random() * 0.02 + 0.01);
-
-// --- GLOBAL APP LOGIC ---
 window.targetOpacity = 0;
 window.openPhotosApp = openPhotosApp;
 window.closePhotosApp = closePhotosApp;
@@ -170,7 +159,6 @@ window.closeLetterUI = () => {
     setTimeout(() => wrapper.style.display = 'none', 500);
 };
 
-// --- HOTSPOTS ---
 function addHotspot(mesh, iconClass, offset) {
     const el = document.createElement('div');
     el.className = 'hotspot';
@@ -182,8 +170,6 @@ function addHotspot(mesh, iconClass, offset) {
         else alert("Clicked!");
     };
     hotspotLayer.appendChild(el);
-
-    // Pre-allocate world position vector so we don't create garbage every frame
     activeHotspots.push({
         el,
         mesh,
@@ -192,29 +178,16 @@ function addHotspot(mesh, iconClass, offset) {
     });
 }
 
-addHotspot(cake, 'fa-solid fa-cake-candles', new THREE.Vector3(0, 1.0, 0));
-addHotspot(phone, 'fa-solid fa-mobile-screen-button', new THREE.Vector3(0, 0.4, 0));
-addHotspot(loveLetter, 'fa-solid fa-envelope-open-text', new THREE.Vector3(0, 0.2, 0));
-addHotspot(polaroid, 'fa-solid fa-camera-retro', new THREE.Vector3(0, 0.2, 0));
-addHotspot(radio, 'fa-solid fa-radio', new THREE.Vector3(0, 0.6, 0));
-addHotspot(teddy, 'fa-solid fa-paw', new THREE.Vector3(0, 0.6, 0));
-addHotspot(ring, 'fa-solid fa-gem', new THREE.Vector3(0, 0.4, 0));
-
 function updateHotspots() {
     camera.updateMatrixWorld();
-
     for (let i = 0; i < activeHotspots.length; i++) {
         const h = activeHotspots[i];
         const worldPos = h.worldPos;
-
-        // Reuse the same vector instead of allocating each frame
         worldPos.copy(h.offset);
         h.mesh.localToWorld(worldPos);
         worldPos.project(camera);
-
         const x = (worldPos.x * 0.5 + 0.5) * window.innerWidth;
         const y = (-worldPos.y * 0.5 + 0.5) * window.innerHeight;
-
         h.el.style.left = `${x}px`;
         h.el.style.top = `${y}px`;
         h.el.style.display = worldPos.z < 1 ? 'flex' : 'none';
@@ -231,30 +204,20 @@ function updateClock() {
     clockEl.textContent = `${hours}:${minutes}`;
 }
 
-// --- ANIMATION LOOP ---
-let lastFrameTime = performance.now();
-
 function animate() {
     requestAnimationFrame(animate);
-
     const now = performance.now();
-    const delta = (now - lastFrameTime) / 1000; // seconds
+    const delta = (now - lastFrameTime) / 1000;
     lastFrameTime = now;
 
-    // Heart Opacity LERP
     heartMat.opacity += (window.targetOpacity - heartMat.opacity) * 0.05;
 
     if (heartMat.opacity > 0.01) {
         const positions = heartGeo.attributes.position.array;
         for (let i = 0; i < particleCount; i++) {
             const baseIndex = i * 3;
-
-            // Float UP
             positions[baseIndex + 1] += velocities[i] * (1 + delta * 30);
-            // Swaying effect (use time in seconds)
             positions[baseIndex] += Math.sin(now * 0.001 + i) * 0.005;
-
-            // Loop reset
             if (positions[baseIndex + 1] > 8) {
                 positions[baseIndex + 1] = -5;
                 positions[baseIndex] = (Math.random() - 0.5) * 25;
@@ -263,7 +226,6 @@ function animate() {
         heartGeo.attributes.position.needsUpdate = true;
     }
 
-    // Camera Logic
     if (!isDragging) {
         rot -= velocity;
         velocity *= friction;
@@ -281,11 +243,13 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-// Event Listeners
-document.addEventListener('DOMContentLoaded', () => {
-    updateStopwatch();
-    initClockButtons();
-});
+addHotspot(cake, 'fa-solid fa-cake-candles', new THREE.Vector3(0, 1.0, 0));
+addHotspot(phone, 'fa-solid fa-mobile-screen-button', new THREE.Vector3(0, 0.4, 0));
+addHotspot(loveLetter, 'fa-solid fa-envelope-open-text', new THREE.Vector3(0, 0.2, 0));
+addHotspot(polaroid, 'fa-solid fa-camera-retro', new THREE.Vector3(0, 0.2, 0));
+addHotspot(radio, 'fa-solid fa-radio', new THREE.Vector3(0, 0.6, 0));
+addHotspot(teddy, 'fa-solid fa-paw', new THREE.Vector3(0, 0.6, 0));
+addHotspot(ring, 'fa-solid fa-gem', new THREE.Vector3(0, 0.4, 0));
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -303,6 +267,11 @@ window.addEventListener('mousemove', (e) => {
 });
 window.addEventListener('wheel', (e) => {
     targetDist = Math.max(2.5, Math.min(15, targetDist + e.deltaY * 0.01));
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateStopwatch();
+    initClockButtons();
 });
 
 setInterval(updateClock, 1000);

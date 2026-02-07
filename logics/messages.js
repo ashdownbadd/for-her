@@ -1,41 +1,78 @@
 let messageAnimationTimeouts = [];
 
-export function openMessagesApp() {
+const wait = (ms) => new Promise(resolve => {
+    const timeoutId = setTimeout(resolve, ms);
+    messageAnimationTimeouts.push(timeoutId);
+});
+
+function updateMessageTimestamp(appElement) {
+    const dateElement = appElement.querySelector('.messages-app__date');
+    if (!dateElement) return;
+
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+
+    dateElement.textContent = `Today ${hours}:${minutes} ${ampm}`;
+}
+
+export async function openMessagesApp() {
     const app = document.getElementById('messages-app-overlay');
     if (!app) return;
 
     app.classList.add('active');
+    updateMessageTimestamp(app);
 
     const bubblesContainer = app.querySelector('.messages-app__bubbles');
-    if (!bubblesContainer) return;
+    const dateElement = app.querySelector('.messages-app__date');
 
-    const bubbles = Array.from(bubblesContainer.querySelectorAll('.bubble'));
-
-    // Clear previous animation state
     messageAnimationTimeouts.forEach(clearTimeout);
     messageAnimationTimeouts = [];
-    bubbles.forEach(b => b.classList.remove('bubble--visible'));
 
-    if (!bubbles.length) return;
+    dateElement?.classList.remove('messages-app__date--visible');
 
-    // Animate conversation in, slower so it feels like received messages
-    const baseDelay = 800;
-    const stepDelay = 900;
-    const lastExtraDelay = 800;
-
-    bubbles.forEach((bubble, index) => {
-        const isLast = index === bubbles.length - 1;
-        const delay = baseDelay + index * stepDelay + (isLast ? lastExtraDelay : 0);
-
-        const timeoutId = setTimeout(() => {
-            // Only apply if the messages app is still open
-            if (app.classList.contains('active')) {
-                bubble.classList.add('bubble--visible');
-            }
-        }, delay);
-
-        messageAnimationTimeouts.push(timeoutId);
+    const bubbles = Array.from(bubblesContainer.querySelectorAll('.bubble'));
+    bubbles.forEach(b => {
+        b.classList.remove('bubble--visible');
+        b.style.display = 'none';
     });
+
+    const typingIndicator = document.createElement('div');
+    typingIndicator.className = 'bubble bubble--incoming bubble--typing active';
+    typingIndicator.innerHTML = `
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+    `;
+
+    let isFirstMessage = true;
+
+    for (const bubble of bubbles) {
+        if (!app.classList.contains('active')) break;
+
+        if (bubble.classList.contains('bubble--incoming')) {
+            bubble.style.display = 'block';
+            bubblesContainer.insertBefore(typingIndicator, bubble);
+
+            await wait(1800);
+            typingIndicator.remove();
+
+            if (isFirstMessage) {
+                dateElement?.classList.add('messages-app__date--visible');
+                isFirstMessage = false;
+            }
+        } else {
+            await wait(600);
+            bubble.style.display = 'block';
+        }
+
+        bubble.classList.add('bubble--visible');
+        await wait(1200);
+    }
 }
 
 export function closeMessagesApp() {
@@ -44,10 +81,18 @@ export function closeMessagesApp() {
         app.classList.remove('active');
 
         const bubbles = app.querySelectorAll('.bubble');
-        bubbles.forEach(b => b.classList.remove('bubble--visible'));
+        bubbles.forEach(b => {
+            b.classList.remove('bubble--visible');
+            b.style.display = 'none';
+        });
+
+        const typing = app.querySelector('.bubble--typing');
+        if (typing) typing.remove();
+
+        const dateElement = app.querySelector('.messages-app__date');
+        dateElement?.classList.remove('messages-app__date--visible');
     }
 
     messageAnimationTimeouts.forEach(clearTimeout);
     messageAnimationTimeouts = [];
 }
-

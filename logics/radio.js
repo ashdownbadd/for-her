@@ -12,32 +12,14 @@ function formatTime(seconds) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-// Function to update the UI with song info
 function updateSongInfo() {
     if (radioAudio.duration) {
         durationEl.textContent = formatTime(radioAudio.duration);
     }
     const fileName = radioAudio.src.split('/').pop();
-    // Use decodeURIComponent in case there are spaces (%20) in the filename
     const cleanName = decodeURIComponent(fileName).replace('.mp3', '').toUpperCase();
     songTitle.textContent = cleanName || "UNKNOWN TRACK";
 }
-
-// 1. Listen for metadata loading
-radioAudio.addEventListener('loadedmetadata', updateSongInfo);
-
-// 2. IMMEDIATE CHECK: If browser cached the audio, metadata is already there
-if (radioAudio.readyState >= 1) {
-    updateSongInfo();
-}
-
-// Sync progress bar and time
-radioAudio.addEventListener('timeupdate', () => {
-    if (!radioAudio.duration) return;
-    const progress = (radioAudio.currentTime / radioAudio.duration) * 100;
-    progressBar.style.width = `${progress}%`;
-    currentTimeEl.textContent = formatTime(radioAudio.currentTime);
-});
 
 export function openRadioUI() {
     const wrapper = document.getElementById('radio-wrapper');
@@ -48,24 +30,14 @@ export function openRadioUI() {
         wrapper.classList.add('active');
     }, 10);
 
-    // Start playback when opening from hotspot and sync UI state
     if (radioAudio.paused) {
         radioAudio.play().then(() => {
-            if (playIcon) {
-                playIcon.className = 'fa-solid fa-pause';
-            }
-            if (typeof window.targetOpacity !== 'undefined') {
-                window.targetOpacity = 0.8;
-            }
+            if (playIcon) playIcon.className = 'fa-solid fa-pause';
+            if (typeof window.targetOpacity !== 'undefined') window.targetOpacity = 0.8;
         }).catch(e => console.log("Playback blocked until interaction"));
     } else {
-        // If already playing, just ensure UI reflects it
-        if (playIcon) {
-            playIcon.className = 'fa-solid fa-pause';
-        }
-        if (typeof window.targetOpacity !== 'undefined') {
-            window.targetOpacity = 0.8;
-        }
+        if (playIcon) playIcon.className = 'fa-solid fa-pause';
+        if (typeof window.targetOpacity !== 'undefined') window.targetOpacity = 0.8;
     }
 }
 
@@ -81,15 +53,11 @@ export function toggleRadioPlay() {
     }
 }
 
-// Fixed close function - Unified into one
 window.closeRadioUI = () => {
     const wrapper = document.getElementById('radio-wrapper');
     if (!wrapper) return;
 
     wrapper.classList.remove('active');
-
-    // Fade out hearts when closing
-    if (typeof window.targetOpacity !== 'undefined') window.targetOpacity = 0;
 
     setTimeout(() => {
         wrapper.style.display = 'none';
@@ -103,3 +71,16 @@ window.seekAudio = (e) => {
 };
 
 window.toggleRadioPlay = toggleRadioPlay;
+
+radioAudio.addEventListener('loadedmetadata', updateSongInfo);
+
+radioAudio.addEventListener('timeupdate', () => {
+    if (!radioAudio.duration) return;
+    const progress = (radioAudio.currentTime / radioAudio.duration) * 100;
+    progressBar.style.width = `${progress}%`;
+    currentTimeEl.textContent = formatTime(radioAudio.currentTime);
+});
+
+if (radioAudio.readyState >= 1) {
+    updateSongInfo();
+}

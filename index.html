@@ -8,6 +8,7 @@
 
     <link rel="icon" href="assets/svg/logo.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <link rel="stylesheet" href="assets/css/hotspot.css">
     <link rel="stylesheet" href="assets/css/instruction.css">
     <link rel="stylesheet" href="assets/css/phone.css">
@@ -132,9 +133,7 @@
                                         <button class="photos-app__select-btn">Select</button>
                                     </div>
                                 </header>
-
                                 <div id="photos-grid" class="photos-app__grid"></div>
-
                                 <nav class="photos-app__nav">
                                     <div class="photos-app__nav-item photos-app__nav-item--active">
                                         <img src="assets/svg/sf-symbols/photo.fill.on.rectangle.fill.svg"
@@ -159,43 +158,40 @@
 
                         <div id="messages-app-overlay" class="app-screen">
                             <div class="messages-app">
-                                <header class="messages-app__header">
-                                    <div class="messages-app__title-group">
-                                        <span class="messages-app__title">Messages</span>
-                                        <span class="messages-app__subtitle">Pinned</span>
-                                    </div>
-                                    <button class="messages-app__edit">Edit</button>
-                                </header>
-
-                                <div class="messages-app__thread">
-                                    <div class="messages-app__thread-header">
+                                <div class="messages-app__header">
+                                    <button class="messages-app__back"><i class="fa-solid fa-chevron-left"></i></button>
+                                    <div class="messages-app__contact">
                                         <div class="messages-app__avatar">R</div>
-                                        <div class="messages-app__thread-meta">
-                                            <span class="messages-app__name">Baby</span>
-                                            <span class="messages-app__status">Read · 11:11 PM</span>
-                                        </div>
+                                        <span class="messages-app__name">Randall</span>
                                     </div>
+                                    <button class="messages-app__info"><i class="fa-solid fa-circle-info"></i></button>
+                                </div>
+
+                                <div class="messages-app__content">
+                                    <div class="messages-app__label">iMessage</div>
+                                    <div class="messages-app__date"></div>
 
                                     <div class="messages-app__bubbles">
-                                        <div class="bubble bubble--incoming">
-                                            I was just thinking about how lucky I am to have you.
-                                        </div>
-                                        <div class="bubble bubble--incoming">
-                                            You make even my ordinary days feel like something special.
-                                        </div>
-                                        <div class="bubble bubble--incoming">
-                                            That's one of the many reasons I love you. 💛
-                                        </div>
+                                        <div class="bubble bubble--incoming">Hey! I hope you're having a good day.</div>
+                                        <div class="bubble bubble--incoming">I just wanted to say thank you for being
+                                            you.</div>
+                                        <div class="bubble bubble--incoming">Check the Notes app when you have a second!
+                                            ❤️</div>
                                     </div>
                                 </div>
 
-                                <div class="messages-app__input-bar">
-                                    <div class="messages-app__pill">
-                                        <span class="messages-app__placeholder">iMessage</span>
+                                <div class="messages-app__input-area">
+                                    <img src="assets/svg/sf-symbols/camera.fill.svg" class="input-icon--svg"
+                                        alt="Camera">
+
+                                    <img src="assets/svg/sf-symbols/app.store.svg" class="input-icon--svg"
+                                        alt="App Store">
+
+                                    <div class="messages-app__input-pill">
+                                        <span>iMessage</span>
+                                        <img src="assets/svg/sf-symbols/microphone.circle.fill.svg"
+                                            class="input-icon--svg" alt="Mic">
                                     </div>
-                                    <button class="messages-app__send" aria-label="Send">
-                                        <i class="fa-solid fa-arrow-up"></i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -206,7 +202,6 @@
                                     <span class="notes-app__title">Notes</span>
                                     <button class="notes-app__done" onclick="closeNotesApp()">Done</button>
                                 </header>
-
                                 <div class="notes-app__list">
                                     <div>
                                         <div class="notes-app__item-label">Pinned</div>
@@ -229,11 +224,9 @@
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </button>
                             </header>
-
                             <div class="photo-viewer__content">
                                 <img id="full-photo" src="" alt="">
                             </div>
-
                             <nav class="photo-nav">
                                 <div class="photo-nav__action">
                                     <img src="assets/svg/sf-symbols/square.and.arrow.up.svg" alt="Share">
@@ -254,7 +247,6 @@
                                 We've been together since Nov. 21, 2023... and you want to STOP the clock? Not on my
                                 watch! 😤
                             </div>
-
                             <div class="stopwatch">
                                 <div class="stopwatch__display">
                                     <span id="stopwatch-time" class="stopwatch__time">19244:59:22</span>
@@ -268,7 +260,6 @@
                                     <button class="stopwatch__button stopwatch__button--stop">Stop</button>
                                 </div>
                             </div>
-
                             <nav class="clock-nav">
                                 <div class="clock-nav__item">
                                     <img src="assets/svg/sf-symbols/globe.svg" class="clock-nav__icon"
@@ -318,14 +309,9 @@
             <div class="paper">
                 <div class="part part1">
                     <h2>Dear Baby,</h2>
-                    <p>
-                        Valentine's Day is here once more, and I refuse to let it pass again empty-handed.
-                    </p>
-
+                    <p>Valentine's Day is here once more, and I refuse to let it pass again empty-handed.</p>
                     <div class="part part2">
-                        <p>So here's something for you—it took me a while. Even so, it's for you.
-                        </p>
-
+                        <p>So here's something for you—it took me a while. Even so, it's for you.</p>
                         <div class="part part3">
                             <span class="signature">Love, Randall</span>
                         </div>
@@ -339,9 +325,7 @@
 
     <div id="radio-wrapper" class="phone-overlay" onclick="window.closeRadioUI()">
         <div id="radio-ui" class="radio-transparent-container" onclick="event.stopPropagation()">
-
             <h3 id="song-title" class="minimal-text">Loading</h3>
-
             <div class="minimal-playback">
                 <div class="minimal-time">
                     <span id="current-time">0:00</span>
@@ -351,7 +335,6 @@
                     <div class="minimal-progress-bar" id="audio-progress"></div>
                 </div>
             </div>
-
             <div class="minimal-controls">
                 <button class="icon-btn"><i class="fa-solid fa-backward"></i></button>
                 <button class="icon-btn play-trigger" onclick="window.toggleRadioPlay()">

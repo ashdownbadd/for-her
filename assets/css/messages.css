@@ -2,118 +2,117 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: #000;
-    color: #fff;
+    background-color: #000000;
+    color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
+    user-select: none;
+    overflow: hidden;
 }
 
 .messages-app__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 55px 18px 12px;
+    padding: 50px 16px 10px;
+    background: rgba(20, 20, 20, 0.94);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid #2c2c2e;
+    z-index: 10;
 }
 
-.messages-app__title-group {
+.messages-app__back {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.messages-app__title {
+    align-items: center;
+    gap: 5px;
+    color: #0A84FF;
     font-size: 17px;
-    font-weight: 600;
-}
-
-.messages-app__subtitle {
-    font-size: 11px;
-    color: #8e8e93;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
-
-.messages-app__edit {
     background: none;
     border: none;
-    color: #0A84FF;
-    font-size: 16px;
-    font-weight: 400;
     cursor: pointer;
 }
 
-.messages-app__thread {
-    padding: 12px 14px 8px;
+.messages-app__contact {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.messages-app__thread-header {
-    display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 6px;
-}
-
-.messages-app__avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #ff9ad5, #ffd37a);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 18px;
-}
-
-.messages-app__thread-meta {
-    display: flex;
-    flex-direction: column;
     gap: 2px;
 }
 
-.messages-app__name {
-    font-size: 15px;
+.messages-app__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #5d5d7a 0%, #42425e 40%, #2e2e42 100%);
+    font-size: 14px;
     font-weight: 600;
+    color: white;
+    text-transform: uppercase;
 }
 
-.messages-app__status {
+.messages-app__name {
     font-size: 11px;
     color: #8e8e93;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.messages-app__info {
+    color: #0A84FF;
+    font-size: 18px;
+    background: none;
+    border: none;
+}
+
+.messages-app__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px;
+    overflow-y: auto;
+}
+
+.messages-app__content::-webkit-scrollbar {
+    width: 0px;
+}
+
+.messages-app__label,
+.messages-app__date {
+    align-self: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #8e8e93;
+    letter-spacing: 0.05em;
+}
+
+.messages-app__date {
+    margin-bottom: 12px;
+    opacity: 0;
+}
+
+.messages-app__date--visible {
+    opacity: 1;
 }
 
 .messages-app__bubbles {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-top: 4px;
+    gap: 2px;
 }
 
 .bubble {
-    max-width: 75%;
-    padding: 8px 12px;
-    border-radius: 16px;
-    font-size: 14px;
+    position: relative;
+    max-width: 72%;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 16px;
     line-height: 1.35;
     opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.bubble--incoming {
-    align-self: flex-start;
-    background: #262628;
-}
-
-.bubble--incoming:first-child {
-    border-bottom-left-radius: 4px;
-}
-
-.bubble--outgoing {
-    align-self: flex-end;
-    background: linear-gradient(135deg, #0A84FF, #3a9eff);
-    border-bottom-right-radius: 4px;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bubble--visible {
@@ -121,36 +120,106 @@
     transform: translateY(0);
 }
 
-.messages-app__input-bar {
-    margin-top: auto;
-    padding: 8px 10px 26px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.bubble--incoming {
+    align-self: flex-start;
+    background-color: #262628;
+    color: #ffffff;
+    border-bottom-left-radius: 4px;
+    margin-bottom: 4px;
 }
 
-.messages-app__pill {
-    flex: 1;
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.08);
+.bubble--outgoing {
+    align-self: flex-end;
+    background: linear-gradient(180deg, #0A84FF 0%, #007aff 100%);
+    color: #ffffff;
+    border-bottom-right-radius: 4px;
+    margin-bottom: 4px;
 }
 
-.messages-app__placeholder {
-    font-size: 14px;
-    color: #8e8e93;
-}
-
-.messages-app__send {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: none;
-    background: #0A84FF;
-    color: #fff;
-    display: flex;
+.bubble--typing {
+    display: none;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    cursor: default;
+    align-self: flex-start;
+    width: 52px;
+    height: 32px;
+    padding: 0;
+    margin-bottom: 8px;
+    background-color: #262628;
+    gap: 4px;
+}
+
+.bubble--typing.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #8e8e93;
+    opacity: 0.4;
+    animation: iMessageWave 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes iMessageWave {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+
+    30% {
+        transform: translateY(-5px);
+        opacity: 1;
+    }
+}
+
+.messages-app__input-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px 12px 34px;
+    background: #000000;
+}
+
+.input-icon--svg {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    object-fit: contain;
+}
+
+.messages-app__input-pill {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 36px;
+    padding: 0 4px 0 12px;
+    background: #000000;
+    border: 1px solid #3c3c3e;
+    border-radius: 18px;
+}
+
+.messages-app__input-pill .input-icon--svg {
+    width: 28px;
+    height: 28px;
+}
+
+.messages-app__input-pill span {
+    color: #8e8e93;
+    font-size: 16px;
 }
