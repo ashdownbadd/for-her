@@ -1,0 +1,156 @@
+.messages-app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #000;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
+}
+
+.messages-app__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 55px 18px 12px;
+}
+
+.messages-app__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.messages-app__title {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.messages-app__subtitle {
+    font-size: 11px;
+    color: #8e8e93;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.messages-app__edit {
+    background: none;
+    border: none;
+    color: #0A84FF;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.messages-app__thread {
+    padding: 12px 14px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.messages-app__thread-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.messages-app__avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ff9ad5, #ffd37a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.messages-app__thread-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.messages-app__name {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.messages-app__status {
+    font-size: 11px;
+    color: #8e8e93;
+}
+
+.messages-app__bubbles {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.bubble {
+    max-width: 75%;
+    padding: 8px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.35;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.bubble--incoming {
+    align-self: flex-start;
+    background: #262628;
+}
+
+.bubble--incoming:first-child {
+    border-bottom-left-radius: 4px;
+}
+
+.bubble--outgoing {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #0A84FF, #3a9eff);
+    border-bottom-right-radius: 4px;
+}
+
+.bubble--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.messages-app__input-bar {
+    margin-top: auto;
+    padding: 8px 10px 26px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.messages-app__pill {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.messages-app__placeholder {
+    font-size: 14px;
+    color: #8e8e93;
+}
+
+.messages-app__send {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #0A84FF;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: default;
+}

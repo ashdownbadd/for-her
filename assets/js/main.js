@@ -17,6 +17,8 @@ import { initWeather } from '../../logics/weather.js';
 import { initCalendar } from '../../logics/calendar.js';
 import { openPhotosApp, closePhotosApp, openPhotoViewer, closePhotoViewer } from '../../logics/photos.js';
 import { openClockApp, closeClockApp, updateStopwatch, initClockButtons } from '../../logics/clock.js';
+import { openMessagesApp, closeMessagesApp } from '../../logics/messages.js';
+import { openNotesApp, closeNotesApp } from '../../logics/notes.js';
 import { openRadioUI } from '../../logics/radio.js';
 
 const hotspotLayer = document.getElementById('hotspots-layer');
@@ -107,7 +109,7 @@ const heartMat = new THREE.PointsMaterial({
     size: 0.25,             // Small hearts
     map: heartTexture,      // Now heartTexture is defined!
     transparent: true,
-    opacity: 0, 
+    opacity: 0,
     alphaTest: 0.01,
     depthWrite: false,
     blending: THREE.AdditiveBlending
@@ -126,6 +128,10 @@ window.openPhotoViewer = openPhotoViewer;
 window.closePhotoViewer = closePhotoViewer;
 window.openClockApp = openClockApp;
 window.closeClockApp = closeClockApp;
+window.openMessagesApp = openMessagesApp;
+window.closeMessagesApp = closeMessagesApp;
+window.openNotesApp = openNotesApp;
+window.closeNotesApp = closeNotesApp;
 
 window.openPhoneUI = () => {
     const wrapper = document.getElementById('phone-wrapper');
@@ -136,10 +142,14 @@ window.openPhoneUI = () => {
 window.closePhoneUI = () => {
     const clockApp = document.getElementById('clock-app-overlay');
     const photosApp = document.getElementById('photos-app-overlay');
+    const messagesApp = document.getElementById('messages-app-overlay');
+    const notesApp = document.getElementById('notes-app-overlay');
     const photoViewer = document.getElementById('photo-viewer');
     const phoneWrapper = document.getElementById('phone-wrapper');
 
     if (photoViewer?.classList.contains('active')) closePhotoViewer();
+    else if (messagesApp?.classList.contains('active')) closeMessagesApp();
+    else if (notesApp?.classList.contains('active')) closeNotesApp();
     else if (clockApp?.classList.contains('active')) closeClockApp();
     else if (photosApp?.classList.contains('active')) closePhotosApp();
     else {
@@ -172,7 +182,14 @@ function addHotspot(mesh, iconClass, offset) {
         else alert("Clicked!");
     };
     hotspotLayer.appendChild(el);
-    activeHotspots.push({ el, mesh, offset });
+
+    // Pre-allocate world position vector so we don't create garbage every frame
+    activeHotspots.push({
+        el,
+        mesh,
+        offset,
+        worldPos: offset.clone()
+    });
 }
 
 addHotspot(cake, 'fa-solid fa-cake-candles', new THREE.Vector3(0, 1.0, 0));
@@ -185,16 +202,23 @@ addHotspot(ring, 'fa-solid fa-gem', new THREE.Vector3(0, 0.4, 0));
 
 function updateHotspots() {
     camera.updateMatrixWorld();
-    activeHotspots.forEach(h => {
-        const worldPos = h.offset.clone();
+
+    for (let i = 0; i < activeHotspots.length; i++) {
+        const h = activeHotspots[i];
+        const worldPos = h.worldPos;
+
+        // Reuse the same vector instead of allocating each frame
+        worldPos.copy(h.offset);
         h.mesh.localToWorld(worldPos);
         worldPos.project(camera);
+
         const x = (worldPos.x * 0.5 + 0.5) * window.innerWidth;
         const y = (-worldPos.y * 0.5 + 0.5) * window.innerHeight;
+
         h.el.style.left = `${x}px`;
         h.el.style.top = `${y}px`;
         h.el.style.display = worldPos.z < 1 ? 'flex' : 'none';
-    });
+    }
 }
 
 function updateClock() {
@@ -208,8 +232,14 @@ function updateClock() {
 }
 
 // --- ANIMATION LOOP ---
+let lastFrameTime = performance.now();
+
 function animate() {
     requestAnimationFrame(animate);
+
+    const now = performance.now();
+    const delta = (now - lastFrameTime) / 1000; // seconds
+    lastFrameTime = now;
 
     // Heart Opacity LERP
     heartMat.opacity += (window.targetOpacity - heartMat.opacity) * 0.05;
@@ -217,15 +247,17 @@ function animate() {
     if (heartMat.opacity > 0.01) {
         const positions = heartGeo.attributes.position.array;
         for (let i = 0; i < particleCount; i++) {
+            const baseIndex = i * 3;
+
             // Float UP
-            positions[i * 3 + 1] += velocities[i];
-            // Swaying effect
-            positions[i * 3] += Math.sin(Date.now() * 0.001 + i) * 0.005;
+            positions[baseIndex + 1] += velocities[i] * (1 + delta * 30);
+            // Swaying effect (use time in seconds)
+            positions[baseIndex] += Math.sin(now * 0.001 + i) * 0.005;
 
             // Loop reset
-            if (positions[i * 3 + 1] > 8) {
-                positions[i * 3 + 1] = -5;
-                positions[i * 3] = (Math.random() - 0.5) * 25;
+            if (positions[baseIndex + 1] > 8) {
+                positions[baseIndex + 1] = -5;
+                positions[baseIndex] = (Math.random() - 0.5) * 25;
             }
         }
         heartGeo.attributes.position.needsUpdate = true;
