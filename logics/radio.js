@@ -48,18 +48,28 @@ export function openRadioUI() {
         wrapper.classList.add('active');
     }, 10);
 
-    const radioAudio = document.getElementById('radio-audio');
-    radioAudio.play().then(() => {
+    // Start playback when opening from hotspot and sync UI state
+    if (radioAudio.paused) {
+        radioAudio.play().then(() => {
+            if (playIcon) {
+                playIcon.className = 'fa-solid fa-pause';
+            }
+            if (typeof window.targetOpacity !== 'undefined') {
+                window.targetOpacity = 0.8;
+            }
+        }).catch(e => console.log("Playback blocked until interaction"));
+    } else {
+        // If already playing, just ensure UI reflects it
+        if (playIcon) {
+            playIcon.className = 'fa-solid fa-pause';
+        }
         if (typeof window.targetOpacity !== 'undefined') {
             window.targetOpacity = 0.8;
         }
-    }).catch(e => console.log("Playback blocked until interaction"));
+    }
 }
 
 export function toggleRadioPlay() {
-    const radioAudio = document.getElementById('radio-audio');
-    const playIcon = document.getElementById('play-icon');
-
     if (radioAudio.paused) {
         radioAudio.play();
         playIcon.className = 'fa-solid fa-pause';

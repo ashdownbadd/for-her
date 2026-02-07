@@ -1,29 +1,29 @@
+/* Overlay (click area only, visually transparent) */
 #radio-wrapper {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100vw;
     height: 100vh;
     display: none;
-    
-    background: rgba(0, 0, 0, 0.01) !important; 
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    
     z-index: 2000;
+
     display: none;
     justify-content: center;
-    /* Changed from center to flex-end to move to bottom */
-    align-items: flex-end; 
-    /* Spacing from the bottom edge */
-    padding-bottom: 50px; 
+    align-items: flex-end;
+    padding-bottom: 40px;
     cursor: pointer;
+
+    /* No visual overlay, keep background clear */
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
 
 #radio-wrapper.active {
     display: flex;
 }
 
+/* Container */
 #radio-ui {
     pointer-events: auto;
     cursor: default;
@@ -35,80 +35,104 @@
 }
 
 .radio-transparent-container {
-    width: 400px;
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
+    width: min(420px, 90vw);
+    padding: 0;
+
+    /* Remove card background/border: only controls + bar visible */
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
-    /* Changed color to white */
-    color: #ffffff; 
+    align-items: stretch;
+    color: #ffffff;
 }
 
 .minimal-text {
-    margin: 0 0 15px 0;
-    font-size: 18px;
-    font-weight: 300;
-    letter-spacing: 2px;
-    /* Adjusted shadow for white text */
+    margin: 0 0 14px 0;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .minimal-playback {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .minimal-time {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    margin-bottom: 8px;
-    font-family: monospace;
+    font-size: 11px;
+    margin-bottom: 6px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    opacity: 0.85;
 }
 
 .minimal-progress-bg {
     width: 100%;
-    /* Increased thickness */
     height: 4px; 
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.18);
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 999px;
+    overflow: hidden;
 }
 
 .minimal-progress-bar {
     width: 0%;
     height: 100%;
-    /* Changed to white */
-    background: #ffffff; 
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-    border-radius: 2px;
+    background: linear-gradient(90deg, #ff9ad5, #ffd37a);
+    box-shadow: 0 0 10px rgba(255, 180, 220, 0.8);
+    border-radius: inherit;
 }
 
 .minimal-controls {
     display: flex;
-    gap: 40px;
+    gap: 32px;
     align-items: center;
+    justify-content: center;
 }
 
 .icon-btn {
     background: none;
     border: none;
-    /* Changed color to white */
     color: #ffffff; 
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
-    transition: transform 0.2s, opacity 0.2s;
+    transition: opacity 0.18s ease;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 0;
+    width: auto;
+    height: auto;
 }
 
 .icon-btn:hover {
-    transform: scale(1.2);
-    opacity: 1;
+    transform: none;
+    opacity: 0.85;
+    box-shadow: none;
 }
 
 .play-trigger {
-    font-size: 32px;
+    font-size: 24px;
+    width: auto;
+    height: auto;
+}
+
+@media (max-width: 480px) {
+    #radio-wrapper {
+        padding-bottom: 24px;
+    }
+
+    .radio-transparent-container {
+        padding-inline: 16px;
+    }
+
+    .minimal-controls {
+        gap: 24px;
+    }
 }
