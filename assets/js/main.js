@@ -18,7 +18,6 @@ import { initCalendar } from '../../logics/calendar.js';
 import { openPhotosApp, closePhotosApp, openPhotoViewer, closePhotoViewer } from '../../logics/photos.js';
 import { openClockApp, closeClockApp, updateStopwatch, initClockButtons } from '../../logics/clock.js';
 import { openMessagesApp, closeMessagesApp } from '../../logics/messages.js';
-import { openNotesApp, closeNotesApp } from '../../logics/notes.js';
 import { openRadioUI } from '../../logics/radio.js';
 
 const hotspotLayer = document.getElementById('hotspots-layer');
@@ -119,8 +118,6 @@ window.openClockApp = openClockApp;
 window.closeClockApp = closeClockApp;
 window.openMessagesApp = openMessagesApp;
 window.closeMessagesApp = closeMessagesApp;
-window.openNotesApp = openNotesApp;
-window.closeNotesApp = closeNotesApp;
 
 window.openPhoneUI = () => {
     const wrapper = document.getElementById('phone-wrapper');
@@ -132,13 +129,11 @@ window.closePhoneUI = () => {
     const clockApp = document.getElementById('clock-app-overlay');
     const photosApp = document.getElementById('photos-app-overlay');
     const messagesApp = document.getElementById('messages-app-overlay');
-    const notesApp = document.getElementById('notes-app-overlay');
     const photoViewer = document.getElementById('photo-viewer');
     const phoneWrapper = document.getElementById('phone-wrapper');
 
     if (photoViewer?.classList.contains('active')) closePhotoViewer();
     else if (messagesApp?.classList.contains('active')) closeMessagesApp();
-    else if (notesApp?.classList.contains('active')) closeNotesApp();
     else if (clockApp?.classList.contains('active')) closeClockApp();
     else if (photosApp?.classList.contains('active')) closePhotosApp();
     else {
@@ -265,6 +260,7 @@ window.addEventListener('mousemove', (e) => {
         rot -= velocity;
     }
 });
+
 window.addEventListener('wheel', (e) => {
     targetDist = Math.max(2.5, Math.min(15, targetDist + e.deltaY * 0.01));
 });
@@ -275,5 +271,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 setInterval(updateClock, 1000);
+
 updateClock();
 animate();

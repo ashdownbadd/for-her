@@ -149,6 +149,7 @@
     object-fit: contain;
 }
 
+/* --- PHOTO VIEWER NAV (Scalable & Refined) --- */
 .photo-nav {
     position: absolute;
     bottom: 0;
@@ -156,43 +157,53 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 20px 20px 45px;
+    padding: 20px 20px 40px; /* Reduced bottom padding slightly */
+    z-index: 10;
 }
 
-.photo-nav img {
-    width: auto;
-    height: 22px;
+/* Reduced Bounding Box */
+.photo-nav__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;  /* Down from 32px */
+    height: 28px;
+    cursor: pointer;
+}
+
+.photo-nav__item img {
+    height: auto;
     object-fit: contain;
 }
 
-.photo-nav img[src*="square.and.arrow.up.svg"] {
-    height: 24px;
-}
+/* Refined Optical Alignment (Smaller Scale) */
+.photo-nav__item img[alt="Share"]    { width: 17px; } /* Slimmer */
+.photo-nav__item img[alt="Favorite"] { width: 19px; }
+.photo-nav__item img[alt="Info"]     { width: 20px; }
+.photo-nav__item img[alt="Edit"]     { width: 19px; }
+.photo-nav__item img[alt="Delete"]   { width: 16px; } /* Slimmer */
 
-.photo-nav img[src*="slider.horizontal.3.svg"] {
-    height: 20px;
-}
-
+/* --- CONTAINERS (Scaled Down) --- */
 .photo-nav__action,
 .photo-nav__group {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(40, 40, 40, 0.75); 
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    color: #0A84FF;
+    border: 0.5px solid rgba(255, 255, 255, 0.12);
 }
 
 .photo-nav__action {
-    width: 50px;
-    height: 50px;
+    width: 42px;  /* Down from 50px */
+    height: 42px; /* Down from 50px */
     border-radius: 50%;
 }
 
 .photo-nav__group {
-    height: 50px;
-    padding: 0 25px;
-    gap: 30px;
-    border-radius: 25px;
+    height: 42px;   /* Down from 50px */
+    padding: 0 12px;
+    gap: 12px;      /* Tighter spacing for a more "built-in" look */
+    border-radius: 21px; /* Matches half of height for perfect pill shape */
 }

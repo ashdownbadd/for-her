@@ -8,7 +8,6 @@
 
     <link rel="icon" href="assets/svg/logo.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <link rel="stylesheet" href="assets/css/hotspot.css">
     <link rel="stylesheet" href="assets/css/instruction.css">
     <link rel="stylesheet" href="assets/css/phone.css">
@@ -17,7 +16,6 @@
     <link rel="stylesheet" href="assets/css/letter.css">
     <link rel="stylesheet" href="assets/css/radio.css">
     <link rel="stylesheet" href="assets/css/messages.css">
-    <link rel="stylesheet" href="assets/css/notes.css">
 
     <style>
         * {
@@ -50,7 +48,6 @@
         <div id="phone-ui" class="phone-modal" onclick="event.stopPropagation()">
             <div class="phone-modal__frame">
                 <div class="phone-modal__screen">
-
                     <div class="phone-status-bar">
                         <span class="phone-status-bar__time" id="clock">11:11</span>
                         <div class="phone-status-bar__notch"></div>
@@ -107,38 +104,75 @@
                                 <span class="app-item__label">Photos</span>
                             </div>
 
-                            <div class="app-item" onclick="openNotesApp()">
-                                <div class="app-item__icon">
-                                    <img src="assets/svg/app-icons/notes.svg" class="app-item__svg" alt="Notes">
-                                </div>
-                                <span class="app-item__label">Notes</span>
-                            </div>
-
                             <div class="app-item" id="clock-app-trigger" onclick="openClockApp()">
                                 <div class="app-item__icon">
                                     <img src="assets/svg/app-icons/clock.svg" class="app-item__svg" alt="Clock">
                                 </div>
                                 <span class="app-item__label">Clock</span>
                             </div>
+
+                            <div class="app-item">
+                                <div class="app-item__icon">
+                                    <img src="assets/svg/app-icons/notes.svg" class="app-item__svg" alt="Notes">
+                                </div>
+                                <span class="app-item__label">Notes</span>
+                            </div>
+                        </div>
+
+                        <div id="messages-app-overlay" class="app-screen">
+                            <div class="messages-app">
+                                <div class="messages-app__header">
+                                    <div class="messages-app__top">
+                                        <button class="messages-app__back">
+                                            <i class="fa-solid fa-chevron-left"></i>
+                                        </button>
+                                        <div class="messages-app__contact">
+                                            <div class="messages-app__avatar">R</div>
+                                        </div>
+                                        <button class="messages-app__facetime">
+                                            <img src="assets/svg/sf-symbols/video.svg" class="icon-facetime"
+                                                alt="FaceTime">
+                                        </button>
+                                    </div>
+                                    <span class="messages-app__name">Randall<i
+                                            class="fa-solid fa-chevron-right"></i></span>
+                                </div>
+                                <div class="messages-app__content">
+                                    <div class="messages-app__label">iMessage</div>
+                                    <div class="messages-app__date"></div>
+                                    <div class="messages-app__bubbles">
+                                        <div class="bubble bubble--incoming">Hey! I hope you're having a good day.</div>
+                                        <div class="bubble bubble--incoming">I just wanted to say thank you for being
+                                            you.</div>
+                                        <div class="bubble bubble--incoming">Check the photos when you have a second! ❤️
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="messages-app__input-area">
+                                    <img src="assets/svg/sf-symbols/camera.fill.svg" class="input-icon--svg"
+                                        alt="Camera">
+                                    <img src="assets/svg/sf-symbols/app.store.svg" class="input-icon--svg"
+                                        alt="App Store">
+                                    <div class="messages-app__input-pill">
+                                        <span>iMessage</span>
+                                        <img src="assets/svg/sf-symbols/microphone.circle.fill.svg"
+                                            class="input-icon--svg" alt="Mic">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div id="photos-app-overlay" class="app-screen">
                             <div class="photos-app">
                                 <header class="photos-app__header">
-                                    <div class="photos-app__left"></div>
-                                    <div class="photos-app__center">
-                                        <div class="photos-app__title">All Photos</div>
-                                    </div>
-                                    <div class="photos-app__right">
-                                        <button class="photos-app__select-btn">Select</button>
-                                    </div>
+                                    <div class="photos-app__title">All Photos</div>
+                                    <button class="photos-app__select-btn">Select</button>
                                 </header>
                                 <div id="photos-grid" class="photos-app__grid"></div>
                                 <nav class="photos-app__nav">
                                     <div class="photos-app__nav-item photos-app__nav-item--active">
-                                        <img src="assets/svg/sf-symbols/photo.fill.on.rectangle.fill.svg"
-                                            alt="All Photos">
-                                        <span>All Photos</span>
+                                        <img src="assets/svg/sf-symbols/photo.fill.on.rectangle.fill.svg" alt="Library">
+                                        <span>Library</span>
                                     </div>
                                     <div class="photos-app__nav-item">
                                         <img src="assets/svg/sf-symbols/heart.text.square.fill.svg" alt="For You">
@@ -156,68 +190,6 @@
                             </div>
                         </div>
 
-                        <div id="messages-app-overlay" class="app-screen">
-                            <div class="messages-app">
-                                <div class="messages-app__header">
-                                    <button class="messages-app__back"><i class="fa-solid fa-chevron-left"></i></button>
-                                    <div class="messages-app__contact">
-                                        <div class="messages-app__avatar">R</div>
-                                        <span class="messages-app__name">Randall</span>
-                                    </div>
-                                    <button class="messages-app__info"><i class="fa-solid fa-circle-info"></i></button>
-                                </div>
-
-                                <div class="messages-app__content">
-                                    <div class="messages-app__label">iMessage</div>
-                                    <div class="messages-app__date"></div>
-
-                                    <div class="messages-app__bubbles">
-                                        <div class="bubble bubble--incoming">Hey! I hope you're having a good day.</div>
-                                        <div class="bubble bubble--incoming">I just wanted to say thank you for being
-                                            you.</div>
-                                        <div class="bubble bubble--incoming">Check the Notes app when you have a second!
-                                            ❤️</div>
-                                    </div>
-                                </div>
-
-                                <div class="messages-app__input-area">
-                                    <img src="assets/svg/sf-symbols/camera.fill.svg" class="input-icon--svg"
-                                        alt="Camera">
-
-                                    <img src="assets/svg/sf-symbols/app.store.svg" class="input-icon--svg"
-                                        alt="App Store">
-
-                                    <div class="messages-app__input-pill">
-                                        <span>iMessage</span>
-                                        <img src="assets/svg/sf-symbols/microphone.circle.fill.svg"
-                                            class="input-icon--svg" alt="Mic">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="notes-app-overlay" class="app-screen">
-                            <div class="notes-app">
-                                <header class="notes-app__header">
-                                    <span class="notes-app__title">Notes</span>
-                                    <button class="notes-app__done" onclick="closeNotesApp()">Done</button>
-                                </header>
-                                <div class="notes-app__list">
-                                    <div>
-                                        <div class="notes-app__item-label">Pinned</div>
-                                        <div class="notes-app__card">
-                                            <div class="notes-app__card-title">Reasons I love you</div>
-                                            <div class="notes-app__card-body">
-                                                Your laugh. Your patience. The way you make even ordinary days feel
-                                                special.
-                                                This little project is just one tiny way of saying that.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div id="photo-viewer" class="photo-viewer">
                             <header class="photo-viewer__header">
                                 <button class="photo-viewer__back" onclick="closePhotoViewer()">
@@ -229,15 +201,20 @@
                             </div>
                             <nav class="photo-nav">
                                 <div class="photo-nav__action">
-                                    <img src="assets/svg/sf-symbols/square.and.arrow.up.svg" alt="Share">
+                                    <div class="photo-nav__item"><img
+                                            src="assets/svg/sf-symbols/square.and.arrow.up.svg" alt="Share"></div>
                                 </div>
                                 <div class="photo-nav__group">
-                                    <img src="assets/svg/sf-symbols/heart.svg" alt="Favorite">
-                                    <img src="assets/svg/sf-symbols/info.circle.svg" alt="Info">
-                                    <img src="assets/svg/sf-symbols/slider.horizontal.3.svg" alt="Edit">
+                                    <div class="photo-nav__item"><img src="assets/svg/sf-symbols/heart.svg"
+                                            alt="Favorite"></div>
+                                    <div class="photo-nav__item"><img src="assets/svg/sf-symbols/info.circle.svg"
+                                            alt="Info"></div>
+                                    <div class="photo-nav__item"><img
+                                            src="assets/svg/sf-symbols/slider.horizontal.3.svg" alt="Edit"></div>
                                 </div>
                                 <div class="photo-nav__action">
-                                    <img src="assets/svg/sf-symbols/trash.svg" alt="Delete">
+                                    <div class="photo-nav__item"><img src="assets/svg/sf-symbols/trash.svg"
+                                            alt="Delete"></div>
                                 </div>
                             </nav>
                         </div>
@@ -262,8 +239,7 @@
                             </div>
                             <nav class="clock-nav">
                                 <div class="clock-nav__item">
-                                    <img src="assets/svg/sf-symbols/globe.svg" class="clock-nav__icon"
-                                        alt="World Clock">
+                                    <img src="assets/svg/sf-symbols/globe.svg" class="clock-nav__icon" alt="World">
                                     <span>World Clock</span>
                                 </div>
                                 <div class="clock-nav__item">
@@ -284,18 +260,14 @@
                     </div>
 
                     <div class="phone-dock">
-                        <div class="app-item__icon">
-                            <img src="assets/svg/app-icons/safari.svg" class="app-item__svg" alt="Safari">
-                        </div>
-                        <div class="app-item__icon">
-                            <img src="assets/svg/app-icons/podcasts.svg" class="app-item__svg" alt="Podcasts">
-                        </div>
-                        <div class="app-item__icon">
-                            <img src="assets/svg/app-icons/mail.svg" class="app-item__svg" alt="Mail">
-                        </div>
-                        <div class="app-item__icon">
-                            <img src="assets/svg/app-icons/settings.svg" class="app-item__svg" alt="Settings">
-                        </div>
+                        <div class="app-item__icon"><img src="assets/svg/app-icons/safari.svg" class="app-item__svg"
+                                alt="Safari"></div>
+                        <div class="app-item__icon"><img src="assets/svg/app-icons/podcasts.svg" class="app-item__svg"
+                                alt="Podcasts"></div>
+                        <div class="app-item__icon"><img src="assets/svg/app-icons/mail.svg" class="app-item__svg"
+                                alt="Mail"></div>
+                        <div class="app-item__icon"><img src="assets/svg/app-icons/settings.svg" class="app-item__svg"
+                                alt="Settings"></div>
                     </div>
 
                     <div class="phone-modal__home-indicator"></div>
