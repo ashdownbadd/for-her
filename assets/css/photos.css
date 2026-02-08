@@ -157,7 +157,8 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 20px 20px 40px; /* Reduced bottom padding slightly */
+    padding: 20px 20px 40px;
+    /* Reduced bottom padding slightly */
     z-index: 10;
 }
 
@@ -166,7 +167,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;  /* Down from 32px */
+    width: 28px;
+    /* Down from 32px */
     height: 28px;
     cursor: pointer;
 }
@@ -177,11 +179,28 @@
 }
 
 /* Refined Optical Alignment (Smaller Scale) */
-.photo-nav__item img[alt="Share"]    { width: 17px; } /* Slimmer */
-.photo-nav__item img[alt="Favorite"] { width: 19px; }
-.photo-nav__item img[alt="Info"]     { width: 20px; }
-.photo-nav__item img[alt="Edit"]     { width: 19px; }
-.photo-nav__item img[alt="Delete"]   { width: 16px; } /* Slimmer */
+.photo-nav__item img[alt="Share"] {
+    width: 17px;
+}
+
+/* Slimmer */
+.photo-nav__item img[alt="Favorite"] {
+    width: 19px;
+}
+
+.photo-nav__item img[alt="Info"] {
+    width: 20px;
+}
+
+.photo-nav__item img[alt="Edit"] {
+    width: 19px;
+}
+
+.photo-nav__item img[alt="Delete"] {
+    width: 16px;
+}
+
+/* Slimmer */
 
 /* --- CONTAINERS (Scaled Down) --- */
 .photo-nav__action,
@@ -189,21 +208,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(40, 40, 40, 0.75); 
+    background: rgba(40, 40, 40, 0.75);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border: 0.5px solid rgba(255, 255, 255, 0.12);
 }
 
 .photo-nav__action {
-    width: 42px;  /* Down from 50px */
-    height: 42px; /* Down from 50px */
+    width: 42px;
+    /* Down from 50px */
+    height: 42px;
+    /* Down from 50px */
     border-radius: 50%;
 }
 
 .photo-nav__group {
-    height: 42px;   /* Down from 50px */
+    height: 42px;
+    /* Down from 50px */
     padding: 0 12px;
-    gap: 12px;      /* Tighter spacing for a more "built-in" look */
-    border-radius: 21px; /* Matches half of height for perfect pill shape */
+    gap: 12px;
+    /* Tighter spacing for a more "built-in" look */
+    border-radius: 21px;
+    /* Matches half of height for perfect pill shape */
 }

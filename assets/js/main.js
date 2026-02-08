@@ -19,6 +19,7 @@ import { openPhotosApp, closePhotosApp, openPhotoViewer, closePhotoViewer } from
 import { openClockApp, closeClockApp, updateStopwatch, initClockButtons } from '../../logics/clock.js';
 import { openMessagesApp, closeMessagesApp } from '../../logics/messages.js';
 import { openRadioUI } from '../../logics/radio.js';
+import { eatCake, updateTextEffects } from '../../logics/cake.js';
 
 const hotspotLayer = document.getElementById('hotspots-layer');
 const activeHotspots = [];
@@ -158,12 +159,17 @@ function addHotspot(mesh, iconClass, offset) {
     const el = document.createElement('div');
     el.className = 'hotspot';
     el.innerHTML = `<i class="${iconClass}"></i>`;
+
     el.onclick = () => {
         if (iconClass.includes('fa-mobile-screen-button')) window.openPhoneUI();
         else if (iconClass.includes('fa-envelope-open-text')) window.openLetterUI();
         else if (iconClass.includes('fa-radio')) openRadioUI();
+        else if (iconClass.includes('fa-cake-candles')) {
+            eatCake(mesh, scene, camera); // Added camera
+        }
         else alert("Clicked!");
     };
+
     hotspotLayer.appendChild(el);
     activeHotspots.push({
         el,
@@ -235,6 +241,7 @@ function animate() {
 
     animateCandles(candles);
     updateHotspots();
+    updateTextEffects(scene, camera);
     renderer.render(scene, camera);
 }
 
