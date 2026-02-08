@@ -165,7 +165,7 @@ function addHotspot(mesh, iconClass, offset) {
         else if (iconClass.includes('fa-envelope-open-text')) window.openLetterUI();
         else if (iconClass.includes('fa-radio')) openRadioUI();
         else if (iconClass.includes('fa-cake-candles')) {
-            eatCake(mesh, scene, camera); // Added camera
+            eatCake(mesh, scene, camera);
         }
         else alert("Clicked!");
     };
@@ -278,6 +278,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 setInterval(updateClock, 1000);
-
 updateClock();
 animate();
