@@ -6,6 +6,7 @@ const biteSound = new Audio('assets/audio/bite-sound-effect.wav');
 const respawnSound = new Audio('assets/audio/respawn-sound-effect.wav');
 const maxBites = 4;
 
+let availablePhrases = [...phrases];
 let bitesTaken = 0;
 let isAnimating = false;
 
@@ -15,7 +16,13 @@ function createTextEffect(scene, camera, position) {
     canvas.height = 128;
 
     const ctx = canvas.getContext('2d');
-    const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+
+    if (availablePhrases.length === 0) {
+        availablePhrases = [...phrases];
+    }
+
+    const randomIndex = Math.floor(Math.random() * availablePhrases.length);
+    const phrase = availablePhrases.splice(randomIndex, 1)[0];
 
     ctx.font = 'bold 60px "Comic Sans MS", cursive';
     ctx.fillStyle = '#ff69b4';
