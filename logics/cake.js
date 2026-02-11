@@ -12,8 +12,9 @@ let isAnimating = false;
 
 function createTextEffect(scene, camera, position) {
     const canvas = document.createElement('canvas');
-    canvas.width = 256;
-    canvas.height = 128;
+    // High resolution canvas to keep the big font crisp
+    canvas.width = 1024;
+    canvas.height = 512;
 
     const ctx = canvas.getContext('2d');
 
@@ -24,18 +25,26 @@ function createTextEffect(scene, camera, position) {
     const randomIndex = Math.floor(Math.random() * availablePhrases.length);
     const phrase = availablePhrases.splice(randomIndex, 1)[0];
 
-    ctx.font = 'bold 60px "Comic Sans MS", cursive';
+    // Keeping the big font size you liked
+    ctx.font = 'bold 80px "Comic Sans MS", cursive';
     ctx.fillStyle = '#ff69b4';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+
+    // Aesthetic shadow
     ctx.shadowColor = '#ffb3d9';
-    ctx.shadowBlur = 10;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
-    ctx.fillText(phrase, 128, 64);
+    ctx.shadowBlur = 12;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
+
+    // Draw exactly in the center of the large canvas
+    ctx.fillText(phrase, 512, 256);
 
     const texture = new THREE.CanvasTexture(canvas);
-    const geometry = new THREE.PlaneGeometry(2, 1);
+
+    // IMPORTANT: Plane width increased to 6 so 80px "Scrumptious!" fits perfectly
+    const geometry = new THREE.PlaneGeometry(6, 3);
+
     const material = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
@@ -44,7 +53,7 @@ function createTextEffect(scene, camera, position) {
 
     const textMesh = new THREE.Mesh(geometry, material);
     textMesh.position.copy(position);
-    textMesh.position.y += 0.5;
+    textMesh.position.y += 0.6; // Slightly higher spawn
     textMesh.quaternion.copy(camera.quaternion);
 
     scene.add(textMesh);
