@@ -29,29 +29,15 @@ export function initCalendar() {
                 indicator.style.opacity = "1";
                 indicator.style.background = "#FF2D55";
             }
-            return;
-        }
-
-        const currentHour = now.getHours();
-        const currentMinute = now.getMinutes();
-        const isPastKeynote = currentHour > 11 || (currentHour === 11 && currentMinute >= 30);
-
-        if (isPastKeynote) {
+        } else {
             widget.classList.add('widget--no-event');
             eventTitle.textContent = "No more events today";
             eventTitle.style.color = "#8e8e93";
             eventLocation.textContent = "";
             eventTime.textContent = "";
-        } else {
-            widget.classList.remove('widget--no-event');
-            eventTitle.textContent = "Apple Keynote";
-            eventTitle.style.color = "";
-            eventLocation.textContent = "Online";
-            eventTime.textContent = "10:00-11:30";
 
             if (indicator) {
-                indicator.style.opacity = "1";
-                indicator.style.background = "#AF52DE";
+                indicator.style.opacity = "0";
             }
         }
     };

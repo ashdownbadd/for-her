@@ -1,51 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Indie+Flower&display=swap');
+
 #letter-wrapper .phone-modal {
     display: flex;
     align-items: center;
     justify-content: center;
     background: transparent;
-    box-shadow: none;
 }
 
 .paper {
     width: 400px;
     height: 600px;
     perspective: 2000px;
+    font-family: 'Indie Flower', cursive;
 }
 
 .part {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
     position: relative;
     width: 100%;
     height: 200px;
-    padding: 0px 40px;
+    padding: 20px 40px;
     box-sizing: border-box;
     background: #fef9ef;
     box-shadow: inset rgba(0, 0, 0, 0.05) 0 0 50px;
     transform-style: preserve-3d;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     backface-visibility: hidden;
-    outline: 1px solid transparent;
-    -webkit-background-clip: padding-box;
-}
-
-.part h2 {
-    margin-bottom: 15px;
-    font-size: 28px;
-}
-
-.part p {
-    font-size: 18px;
-    line-height: 1.6;
-    margin: 0;
 }
 
 .part1 {
-    justify-content: flex-start;
-    padding-top: 40px;
     z-index: 3;
     transform-origin: top;
+}
+
+/* Vintage Elements */
+.stamp {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    width: 50px;
+    height: 65px;
+    border: 2px dashed #cfcfcf;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cfcfcf;
+    font-weight: bold;
+    font-size: 18px;
+    transform: rotate(12deg);
+    user-select: none;
+}
+
+.botanical-doodle {
+    font-size: 100px;
+    color: rgba(255, 45, 85, 0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
 }
 
 .part2 {
@@ -56,6 +68,10 @@
     height: 201px;
     transform-origin: top;
     transform: translateZ(0.1px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }
 
 .part3 {
@@ -66,6 +82,25 @@
     height: 201px;
     transform-origin: top;
     transform: translateZ(0.1px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-bottom: 30px;
+    padding-right: 40px;
+}
+
+.letter-message p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 5px 0;
+    color: #444;
+}
+
+.signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    color: #FF2D55;
 }
 
 #letter-wrapper:not(.active) .part1 {
@@ -83,11 +118,4 @@
 
 #letter-ui:hover .part3 {
     transform: rotateX(-60deg) translateZ(0.1px);
-}
-
-.pageNumber {
-    position: absolute;
-    right: 40px;
-    bottom: 20px;
-    color: gray;
 }
