@@ -1,4 +1,3 @@
-/* --- PHOTOS APP LIBRARY --- */
 .photos-app {
     display: flex;
     flex-direction: column;
@@ -23,20 +22,20 @@
 }
 
 .photos-app__select-btn {
+    padding: 0;
     background: none;
     border: none;
     color: #007AFF;
     font-size: 17px;
     cursor: pointer;
-    padding: 0;
 }
 
 .photos-app__grid {
+    flex: 1;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
     padding: 2px;
-    flex: 1;
     overflow-y: auto;
 }
 
@@ -50,8 +49,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.2s ease;
     cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
 .photos-app__item:active img {
@@ -88,17 +87,14 @@
     color: #007AFF;
 }
 
-/* --- PHOTO VIEWER (Constrained to Phone) --- */
 .photo-viewer {
     position: absolute;
-    /* Keeps it inside .phone-modal__screen */
     inset: 0;
     z-index: 200;
     display: none;
     flex-direction: column;
     background-color: #000;
     border-radius: inherit;
-    /* Matches phone rounded corners */
     overflow: hidden;
 }
 
@@ -114,31 +110,30 @@
     align-items: center;
     width: 100%;
     padding: 60px 16px 10px;
-    /* Aligned with status bar */
 }
 
 .photo-viewer__back {
-    background: rgba(0, 0, 0, 0.3);
-    border: none;
-    color: #007AFF;
-    font-size: 20px;
-    cursor: pointer;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 35px;
+    height: 35px;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 50%;
+    color: #007AFF;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 .photo-viewer__content {
     flex: 1;
-    width: 100%;
-    overflow: hidden;
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
     background: #000;
+    overflow: hidden;
 }
 
 .photo-viewer__slider {
@@ -152,59 +147,21 @@
     min-width: 100%;
     height: 100%;
     object-fit: contain;
-    user-select: none;
     pointer-events: none;
+    user-select: none;
 }
 
-/* --- PHOTO VIEWER NAV --- */
 .photo-nav {
     position: absolute;
     bottom: 0;
+    z-index: 110;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     padding: 20px 20px 40px;
-    z-index: 110;
 }
 
-.photo-nav__item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
-}
-
-.photo-nav__item img {
-    height: auto;
-    object-fit: contain;
-}
-
-/* Optical Alignment for SF Symbols */
-.photo-nav__item img[alt="Share"] {
-    width: 17px;
-}
-
-.photo-nav__item img[alt="Favorite"] {
-    width: 19px;
-}
-
-.photo-nav__item img[alt="Info"] {
-    width: 20px;
-}
-
-.photo-nav__item img[alt="Edit"] {
-    width: 19px;
-}
-
-.photo-nav__item img[alt="Trash"],
-.photo-nav__item img[alt="Delete"] {
-    width: 16px;
-}
-
-/* Action Containers (Pills and Circles) */
 .photo-nav__action,
 .photo-nav__group {
     display: flex;
@@ -227,4 +184,39 @@
     padding: 0 12px;
     gap: 12px;
     border-radius: 21px;
+}
+
+.photo-nav__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.photo-nav__item img {
+    height: auto;
+    object-fit: contain;
+}
+
+.photo-nav__item img[alt="Share"] {
+    width: 17px;
+}
+
+.photo-nav__item img[alt="Favorite"] {
+    width: 19px;
+}
+
+.photo-nav__item img[alt="Info"] {
+    width: 20px;
+}
+
+.photo-nav__item img[alt="Edit"] {
+    width: 19px;
+}
+
+.photo-nav__item img[alt="Trash"],
+.photo-nav__item img[alt="Delete"] {
+    width: 16px;
 }

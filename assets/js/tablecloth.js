@@ -13,8 +13,8 @@ export function createPinkTablecloth() {
 
     ctx.strokeStyle = 'rgba(255, 192, 203, 0.3)';
     ctx.lineWidth = 2;
-
     ctx.translate(256, 256);
+
     for (let i = 0; i < 12; i++) {
         ctx.rotate(Math.PI / 6);
         ctx.beginPath();
@@ -25,15 +25,23 @@ export function createPinkTablecloth() {
         ctx.arc(180, 0, 30, 0, Math.PI * 2);
         ctx.stroke();
     }
+
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     ctx.strokeStyle = 'rgba(0,0,0,0.03)';
     for (let i = 0; i < 512; i += 4) {
-        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 512); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, 512);
+        ctx.stroke();
     }
+
     ctx.strokeStyle = 'rgba(255,255,255,0.05)';
     for (let i = 0; i < 512; i += 4) {
-        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(512, i); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(512, i);
+        ctx.stroke();
     }
 
     const fabricTexture = new THREE.CanvasTexture(canvas);

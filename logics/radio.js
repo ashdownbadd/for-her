@@ -58,7 +58,6 @@ window.closeRadioUI = () => {
     if (!wrapper) return;
 
     wrapper.classList.remove('active');
-
     setTimeout(() => {
         wrapper.style.display = 'none';
     }, 500);

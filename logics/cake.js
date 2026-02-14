@@ -1,9 +1,9 @@
 import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.module.js';
 
 const phrases = ['Delicious!', 'Tasty!', 'Yum!', 'Nom nom!', 'Sweet!', 'Amazing!', 'Mmm!', 'Scrumptious!'];
-const textEffects = [];
 const biteSound = new Audio('assets/audio/bite-sound-effect.wav');
 const respawnSound = new Audio('assets/audio/respawn-sound-effect.wav');
+const textEffects = [];
 const maxBites = 4;
 
 let availablePhrases = [...phrases];
@@ -12,7 +12,6 @@ let isAnimating = false;
 
 function createTextEffect(scene, camera, position) {
     const canvas = document.createElement('canvas');
-    // High resolution canvas to keep the big font crisp
     canvas.width = 1024;
     canvas.height = 512;
 
@@ -25,26 +24,18 @@ function createTextEffect(scene, camera, position) {
     const randomIndex = Math.floor(Math.random() * availablePhrases.length);
     const phrase = availablePhrases.splice(randomIndex, 1)[0];
 
-    // Keeping the big font size you liked
     ctx.font = 'bold 80px "Comic Sans MS", cursive';
     ctx.fillStyle = '#ff69b4';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-
-    // Aesthetic shadow
     ctx.shadowColor = '#ffb3d9';
     ctx.shadowBlur = 12;
     ctx.shadowOffsetX = 3;
     ctx.shadowOffsetY = 3;
-
-    // Draw exactly in the center of the large canvas
     ctx.fillText(phrase, 512, 256);
 
     const texture = new THREE.CanvasTexture(canvas);
-
-    // IMPORTANT: Plane width increased to 6 so 80px "Scrumptious!" fits perfectly
     const geometry = new THREE.PlaneGeometry(6, 3);
-
     const material = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
@@ -53,7 +44,7 @@ function createTextEffect(scene, camera, position) {
 
     const textMesh = new THREE.Mesh(geometry, material);
     textMesh.position.copy(position);
-    textMesh.position.y += 0.6; // Slightly higher spawn
+    textMesh.position.y += 0.6;
     textMesh.quaternion.copy(camera.quaternion);
 
     scene.add(textMesh);

@@ -3,6 +3,12 @@ import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/
 export function createNapkin(position, rotationY = 0) {
     const napkinGroup = new THREE.Group();
 
+    const size = 0.45;
+    const radius = 0.02;
+    const thickness = 0.001;
+    const x = -size / 2;
+    const y = -size / 2;
+
     const napkinMat = new THREE.MeshStandardMaterial({
         color: 0xffffff,
         roughness: 1.0,
@@ -10,14 +16,7 @@ export function createNapkin(position, rotationY = 0) {
         side: THREE.DoubleSide
     });
 
-    const size = 0.45;
-    const radius = 0.02;
-    const thickness = 0.001;
-
     const shape = new THREE.Shape();
-    const x = -size / 2;
-    const y = -size / 2;
-
     shape.moveTo(x, y + radius);
     shape.lineTo(x, y + size - radius);
     shape.quadraticCurveTo(x, y + size, x + radius, y + size);

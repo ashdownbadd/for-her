@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="assets/css/letter.css">
     <link rel="stylesheet" href="assets/css/radio.css">
     <link rel="stylesheet" href="assets/css/messages.css">
+    <link rel="stylesheet" href="assets/css/mobile-blocker.css">
 
     <style>
         * {
@@ -35,6 +36,15 @@
 </head>
 
 <body>
+    <div id="mobile-blocker">
+        <div class="blocker-content">
+            <i class="fa-solid fa-laptop"></i>
+            <h1>Larger Screens Only</h1>
+            <p>This project is optimized for larger screens only. Please access this site from your laptop for the
+                best experience.</p>
+        </div>
+    </div>
+
     <div id="hotspots-layer" class="hotspot-container"></div>
 
     <div class="interaction-hint">
@@ -195,12 +205,9 @@
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </button>
                             </header>
-
                             <div class="photo-viewer__content">
-                                <div id="photo-slider" class="photo-viewer__slider">
-                                </div>
+                                <div id="photo-slider" class="photo-viewer__slider"></div>
                             </div>
-
                             <nav class="photo-nav">
                                 <div class="photo-nav__action">
                                     <div class="photo-nav__item">
@@ -228,23 +235,19 @@
 
                         <div id="clock-app-overlay" class="app-screen">
                             <div id="reset-denial-toast" class="toast-bubble"></div>
-
                             <div class="stopwatch">
                                 <div class="stopwatch__display">
                                     <span id="stopwatch-time" class="stopwatch__time">0:00:00</span>
                                 </div>
                                 <div class="stopwatch__controls">
                                     <button class="stopwatch__button stopwatch__button--lap">Lap</button>
-
                                     <div class="stopwatch__indicators">
                                         <span class="stopwatch__dot stopwatch__dot--active"></span>
                                         <span class="stopwatch__dot"></span>
                                     </div>
-
                                     <button class="stopwatch__button stopwatch__button--stop">Stop</button>
                                 </div>
                             </div>
-
                             <nav class="clock-nav">
                                 <div class="clock-nav__item">
                                     <img src="assets/svg/sf-symbols/globe.svg" class="clock-nav__icon" alt="World">
@@ -268,14 +271,18 @@
                     </div>
 
                     <div class="phone-dock">
-                        <div class="app-item__icon"><img src="assets/svg/app-icons/safari.svg" class="app-item__svg"
-                                alt="Safari"></div>
-                        <div class="app-item__icon"><img src="assets/svg/app-icons/podcasts.svg" class="app-item__svg"
-                                alt="Podcasts"></div>
-                        <div class="app-item__icon"><img src="assets/svg/app-icons/mail.svg" class="app-item__svg"
-                                alt="Mail"></div>
-                        <div class="app-item__icon"><img src="assets/svg/app-icons/settings.svg" class="app-item__svg"
-                                alt="Settings"></div>
+                        <div class="app-item__icon">
+                            <img src="assets/svg/app-icons/safari.svg" class="app-item__svg" alt="Safari">
+                        </div>
+                        <div class="app-item__icon">
+                            <img src="assets/svg/app-icons/podcasts.svg" class="app-item__svg" alt="Podcasts">
+                        </div>
+                        <div class="app-item__icon">
+                            <img src="assets/svg/app-icons/mail.svg" class="app-item__svg" alt="Mail">
+                        </div>
+                        <div class="app-item__icon">
+                            <img src="assets/svg/app-icons/settings.svg" class="app-item__svg" alt="Settings">
+                        </div>
                     </div>
 
                     <div class="phone-modal__home-indicator"></div>

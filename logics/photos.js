@@ -12,7 +12,9 @@ export function openPhotosApp() {
 
 export function closePhotosApp() {
     const app = document.getElementById('photos-app-overlay');
-    if (app) app.classList.remove('active');
+    if (app) {
+        app.classList.remove('active');
+    }
 }
 
 function renderLibrary() {
@@ -33,16 +35,14 @@ export function openPhotoViewer(imageSrc) {
     const slider = document.getElementById('photo-slider');
     if (!viewer || !slider) return;
 
-    // Generate slider images if not already there
     if (slider.children.length === 0) {
         slider.innerHTML = currentImages.map(src => `<img src="${src}" class="slider-img" />`).join('');
     }
 
     currentIndex = currentImages.indexOf(imageSrc);
-    updateSlider(false); // Snap without animation
+    updateSlider(false);
     viewer.classList.add('active');
 
-    // Event Listeners
     window.addEventListener('keydown', handleKeyPress);
     viewer.addEventListener('touchstart', handleTouchStart, { passive: true });
     viewer.addEventListener('touchend', handleTouchEnd);
@@ -50,13 +50,16 @@ export function openPhotoViewer(imageSrc) {
 
 export function closePhotoViewer() {
     const viewer = document.getElementById('photo-viewer');
-    if (viewer) viewer.classList.remove('active');
+    if (viewer) {
+        viewer.classList.remove('active');
+    }
     window.removeEventListener('keydown', handleKeyPress);
 }
 
 function updateSlider(animate = true) {
     const slider = document.getElementById('photo-slider');
     if (!slider) return;
+
     slider.style.transition = animate ? 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
     slider.style.transform = `translateX(-${currentIndex * 100}%)`;
 }
@@ -80,13 +83,15 @@ function handleTouchStart(e) {
 function handleTouchEnd(e) {
     const diff = startX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
-        if (diff > 0 && currentIndex < currentImages.length - 1) currentIndex++;
-        else if (diff < 0 && currentIndex > 0) currentIndex--;
+        if (diff > 0 && currentIndex < currentImages.length - 1) {
+            currentIndex++;
+        } else if (diff < 0 && currentIndex > 0) {
+            currentIndex--;
+        }
         updateSlider();
     }
 }
 
-// Global exposure for HTML buttons
 window.openPhotoViewer = openPhotoViewer;
 window.closePhotoViewer = closePhotoViewer;
 window.openPhotosApp = openPhotosApp;

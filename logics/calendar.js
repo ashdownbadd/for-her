@@ -9,11 +9,20 @@ export function initCalendar() {
 
     if (!dayEl || !dateEl) return;
 
+    const dayNames = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
+
     const updateCalendar = () => {
         const now = new Date();
         const month = now.getMonth();
         const date = now.getDate();
-        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
         dayEl.textContent = dayNames[now.getDay()];
         dateEl.textContent = date;

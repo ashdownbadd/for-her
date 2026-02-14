@@ -1,5 +1,5 @@
 let messageAnimationTimeouts = [];
-let firstOpenTime = null; // Store the exact moment the first message "arrives"
+let firstOpenTime = null;
 
 const wait = (ms) => new Promise(resolve => {
     const timeoutId = setTimeout(resolve, ms);
@@ -37,8 +37,6 @@ export async function openMessagesApp() {
 
     app.classList.add('active');
 
-    // 1. Capture the "Received" time ONLY if this is the first time opening
-    // This ensures if you open at 11:05, it stays 11:05.
     if (!firstOpenTime) {
         firstOpenTime = new Date();
     }
@@ -68,7 +66,6 @@ export async function openMessagesApp() {
     for (const bubble of bubbles) {
         if (!app.classList.contains('active')) return;
 
-        // If bubbles are already visible, just show them and the date immediately
         if (bubble.classList.contains('bubble--visible')) {
             bubble.style.display = 'block';
             dateElement?.classList.add('messages-app__date--visible');
@@ -79,7 +76,7 @@ export async function openMessagesApp() {
             bubble.style.display = 'block';
             bubblesContainer.insertBefore(typingIndicator, bubble);
 
-            await wait(1800); // Wait for the "Typing..." feel
+            await wait(1800);
             typingIndicator.remove();
 
             if (!dateElement?.classList.contains('messages-app__date--visible')) {

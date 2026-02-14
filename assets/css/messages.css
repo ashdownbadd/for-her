@@ -2,14 +2,15 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow: hidden;
     background-color: #000000;
     color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
     user-select: none;
-    overflow: hidden;
 }
 
 .messages-app__header {
+    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,7 +18,6 @@
     background: rgba(20, 20, 20, 0.94);
     backdrop-filter: blur(20px);
     border-bottom: 0.5px solid #2c2c2e;
-    z-index: 10;
 }
 
 .messages-app__top {
@@ -31,10 +31,10 @@
 .messages-app__facetime {
     flex: 1;
     display: flex;
+    padding: 0;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
 }
 
 .messages-app__back {
@@ -68,9 +68,9 @@
     height: 48px;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 35%, #5d5d7a 0%, #42425e 40%, #2e2e42 100%);
+    color: white;
     font-size: 18px;
     font-weight: 600;
-    color: white;
     text-transform: uppercase;
 }
 
@@ -80,17 +80,17 @@
     justify-content: center;
     gap: 3px;
     margin-top: 6px;
+    color: #ffffff;
     font-size: 11px;
     font-weight: 400;
-    color: #ffffff;
     opacity: 0.9;
     cursor: pointer;
 }
 
 .messages-app__name i {
     margin-top: 1px;
-    font-size: 8px;
     color: #999999;
+    font-size: 8px;
 }
 
 .messages-app__content {
@@ -109,18 +109,18 @@
     align-self: center;
     margin-top: 5px;
     margin-bottom: 4px;
+    color: #999999;
     font-size: 11px;
     font-weight: 600;
-    color: #999999;
     letter-spacing: 0.05em;
 }
 
 .messages-app__date {
     align-self: center;
     margin-bottom: 12px;
+    color: #999999;
     font-size: 11px;
     font-weight: 600;
-    color: #999999;
     letter-spacing: 0.05em;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -231,8 +231,8 @@
 .input-icon--svg {
     width: 24px;
     height: 24px;
-    cursor: pointer;
     object-fit: contain;
+    cursor: pointer;
 }
 
 .messages-app__input-pill {

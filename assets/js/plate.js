@@ -21,11 +21,12 @@ export function createPlate() {
     function buildSinglePlate(scale = 1.0) {
         const singlePlateGroup = new THREE.Group();
 
-        const points = [];
-        points.push(new THREE.Vector2(0, 0));
-        points.push(new THREE.Vector2(0.8, 0.02));
-        points.push(new THREE.Vector2(1.15, 0.1));
-        points.push(new THREE.Vector2(1.2, 0.12));
+        const points = [
+            new THREE.Vector2(0, 0),
+            new THREE.Vector2(0.8, 0.02),
+            new THREE.Vector2(1.15, 0.1),
+            new THREE.Vector2(1.2, 0.12)
+        ];
 
         const plateBodyGeo = new THREE.LatheGeometry(points, 64);
         const plateBody = new THREE.Mesh(plateBodyGeo, porcelainMat);
@@ -42,7 +43,9 @@ export function createPlate() {
         innerGoldRim.rotation.x = Math.PI / 2;
         innerGoldRim.position.y = 0.03;
         singlePlateGroup.add(innerGoldRim);
+
         singlePlateGroup.scale.set(scale, scale, scale);
+
         singlePlateGroup.traverse((child) => {
             if (child.isMesh) {
                 child.castShadow = true;
@@ -54,16 +57,17 @@ export function createPlate() {
     }
 
     const cakePlate = buildSinglePlate(1.0);
-    mainGroup.add(cakePlate);
-
     const plate1 = buildSinglePlate(0.4);
-    plate1.position.z = 2.8;
-    mainGroup.add(plate1);
-
     const plate2 = buildSinglePlate(0.4);
+
+    plate1.position.z = 2.8;
     plate2.position.z = -2.8;
+
+    mainGroup.add(cakePlate);
+    mainGroup.add(plate1);
     mainGroup.add(plate2);
 
     mainGroup.position.y = 0.11;
+
     return mainGroup;
 }

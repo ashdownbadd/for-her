@@ -11,9 +11,6 @@ export function createPolaroid(position, rotation = { x: 0, y: 0, z: 0 }) {
         })
     );
 
-    polaroidFrame.position.y = 0.01;
-    polaroidGroup.add(polaroidFrame);
-
     const photoArea = new THREE.Mesh(
         new THREE.PlaneGeometry(0.6, 0.65),
         new THREE.MeshStandardMaterial({
@@ -21,16 +18,24 @@ export function createPolaroid(position, rotation = { x: 0, y: 0, z: 0 }) {
             side: THREE.DoubleSide
         })
     );
+
+    polaroidFrame.position.y = 0.01;
+
     photoArea.rotation.x = -Math.PI / 2;
     photoArea.position.y = 0.021;
     photoArea.position.z = -0.05;
+
+    polaroidGroup.add(polaroidFrame);
     polaroidGroup.add(photoArea);
 
     polaroidGroup.position.copy(position);
     polaroidGroup.rotation.set(rotation.x, rotation.y, rotation.z);
 
-    polaroidGroup.traverse(c => {
-        if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; }
+    polaroidGroup.traverse((c) => {
+        if (c.isMesh) {
+            c.castShadow = true;
+            c.receiveShadow = true;
+        }
     });
 
     return polaroidGroup;

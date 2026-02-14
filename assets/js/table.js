@@ -4,8 +4,8 @@ function createMarbleTexture() {
     const canvas = document.createElement('canvas');
     canvas.width = 1024;
     canvas.height = 1024;
-    const ctx = canvas.getContext('2d');
 
+    const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#f0f0f0';
     ctx.fillRect(0, 0, 1024, 1024);
 
@@ -20,6 +20,7 @@ function createMarbleTexture() {
     for (let i = 0; i < 40; i++) {
         ctx.strokeStyle = `rgba(60, 60, 60, ${0.1 + Math.random() * 0.2})`;
         ctx.beginPath();
+
         let x = Math.random() * 1024;
         let y = Math.random() * 1024;
         ctx.moveTo(x, y);
@@ -60,5 +61,6 @@ export function createTable() {
     base.receiveShadow = true;
 
     group.add(top, pedestal, base);
+
     return group;
 }

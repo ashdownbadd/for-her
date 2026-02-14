@@ -34,10 +34,6 @@ let dist = 20;
 let isDragging = false;
 let lastFrameTime = performance.now();
 
-initScene();
-initWeather();
-initCalendar();
-
 const table = createTable();
 const pinkCloth = createPinkTablecloth();
 const plate = createPlate();
@@ -49,28 +45,6 @@ const polaroid = createPolaroid(new THREE.Vector3(-1.45, 0.1, 0.9), { x: 0, y: 0
 const radio = createRadio(new THREE.Vector3(2.4, 0.1, -1.6), 11.5);
 const teddy = createToy(new THREE.Vector3(0, 0.12, -1.8), Math.PI);
 const ring = createRingBox(new THREE.Vector3(0, 0.12, 1.8), 0);
-
-phone.position.set(1.5, 0.13, 0.85);
-phone.rotation.y = Math.PI / 2 - 0.5;
-loveLetter.position.set(-1.5, 0.11, -1.0);
-loveLetter.rotation.y = Math.PI / 1.5;
-teddy.scale.set(0.6, 0.6, 0.6);
-
-scene.add(table);
-scene.add(pinkCloth);
-scene.add(plate);
-scene.add(cake);
-scene.add(candles);
-scene.add(phone);
-scene.add(loveLetter);
-scene.add(polaroid);
-scene.add(radio);
-scene.add(teddy);
-scene.add(ring);
-scene.add(createNapkin(new THREE.Vector3(0, 0.13, 2.8), 0));
-scene.add(createNapkin(new THREE.Vector3(0, 0.13, -2.8), Math.PI));
-scene.add(createWineSet(new THREE.Vector3(0.6, 0.11, 2.6), 0));
-scene.add(createWineSet(new THREE.Vector3(-0.6, 0.11, -2.6), Math.PI));
 
 const heartCanvas = document.createElement('canvas');
 heartCanvas.width = 64;
@@ -106,8 +80,33 @@ const heartMat = new THREE.PointsMaterial({
     depthWrite: false,
     blending: THREE.AdditiveBlending
 });
-
 const heartParticles = new THREE.Points(heartGeo, heartMat);
+
+initScene();
+initWeather();
+initCalendar();
+
+phone.position.set(1.5, 0.13, 0.85);
+phone.rotation.y = Math.PI / 2 - 0.5;
+loveLetter.position.set(-1.5, 0.11, -1.0);
+loveLetter.rotation.y = Math.PI / 1.5;
+teddy.scale.set(0.6, 0.6, 0.6);
+
+scene.add(table);
+scene.add(pinkCloth);
+scene.add(plate);
+scene.add(cake);
+scene.add(candles);
+scene.add(phone);
+scene.add(loveLetter);
+scene.add(polaroid);
+scene.add(radio);
+scene.add(teddy);
+scene.add(ring);
+scene.add(createNapkin(new THREE.Vector3(0, 0.13, 2.8), 0));
+scene.add(createNapkin(new THREE.Vector3(0, 0.13, -2.8), Math.PI));
+scene.add(createWineSet(new THREE.Vector3(0.6, 0.11, 2.6), 0));
+scene.add(createWineSet(new THREE.Vector3(-0.6, 0.11, -2.6), Math.PI));
 scene.add(heartParticles);
 
 window.targetOpacity = 0;
@@ -166,8 +165,9 @@ function addHotspot(mesh, iconClass, offset) {
         else if (iconClass.includes('fa-radio')) openRadioUI();
         else if (iconClass.includes('fa-cake-candles')) {
             eatCake(mesh, scene, camera);
+        } else {
+            alert("Clicked!");
         }
-        else alert("Clicked!");
     };
 
     hotspotLayer.appendChild(el);

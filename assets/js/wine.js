@@ -28,25 +28,27 @@ export function createWineSet(position, rotationY = 0) {
         opacity: 0.9
     });
 
-    const points = [];
-    points.push(new THREE.Vector2(0, 0));
-    points.push(new THREE.Vector2(0.15, 0));
-    points.push(new THREE.Vector2(0.12, 0.02));
-    points.push(new THREE.Vector2(0.02, 0.02));
-    points.push(new THREE.Vector2(0.02, 0.45));
-    points.push(new THREE.Vector2(0.18, 0.55));
-    points.push(new THREE.Vector2(0.22, 0.75));
-    points.push(new THREE.Vector2(0.18, 0.95));
+    const points = [
+        new THREE.Vector2(0, 0),
+        new THREE.Vector2(0.15, 0),
+        new THREE.Vector2(0.12, 0.02),
+        new THREE.Vector2(0.02, 0.02),
+        new THREE.Vector2(0.02, 0.45),
+        new THREE.Vector2(0.18, 0.55),
+        new THREE.Vector2(0.22, 0.75),
+        new THREE.Vector2(0.18, 0.95)
+    ];
 
     const glassGeo = new THREE.LatheGeometry(points, 32);
     const glassMesh = new THREE.Mesh(glassGeo, glassMat);
     glassGroup.add(glassMesh);
 
-    const winePoints = [];
-    winePoints.push(new THREE.Vector2(0, 0.55));
-    winePoints.push(new THREE.Vector2(0.17, 0.55));
-    winePoints.push(new THREE.Vector2(0.21, 0.75));
-    winePoints.push(new THREE.Vector2(0, 0.75));
+    const winePoints = [
+        new THREE.Vector2(0, 0.55),
+        new THREE.Vector2(0.17, 0.55),
+        new THREE.Vector2(0.21, 0.75),
+        new THREE.Vector2(0, 0.75)
+    ];
 
     const wineGeo = new THREE.LatheGeometry(winePoints, 32);
     const wineMesh = new THREE.Mesh(wineGeo, wineMat);
@@ -55,10 +57,9 @@ export function createWineSet(position, rotationY = 0) {
 
     glassGroup.position.copy(position);
     glassGroup.rotation.y = rotationY;
-
     glassGroup.scale.set(0.5, 0.5, 0.5);
 
-    glassGroup.traverse(child => {
+    glassGroup.traverse((child) => {
         if (child.isMesh) {
             child.castShadow = true;
             child.receiveShadow = true;

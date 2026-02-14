@@ -3,6 +3,10 @@ import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/
 export function createLoveLetter() {
     const letterGroup = new THREE.Group();
 
+    const width = 0.55;
+    const height = 0.35;
+    const paperThickness = 0.008;
+
     const parchmentMat = new THREE.MeshStandardMaterial({
         color: 0xfaf4e1,
         roughness: 0.8,
@@ -20,10 +24,6 @@ export function createLoveLetter() {
         metalness: 0.3,
         clearcoat: 1.0
     });
-
-    const width = 0.55;
-    const height = 0.35;
-    const paperThickness = 0.008;
 
     const paperGeo = new THREE.BoxGeometry(width, paperThickness, height);
 
@@ -52,7 +52,7 @@ export function createLoveLetter() {
     stampRing.position.set(0, paperThickness * 3 + 0.02, 0);
     letterGroup.add(stampRing);
 
-    letterGroup.traverse(child => {
+    letterGroup.traverse((child) => {
         if (child.isMesh) {
             child.castShadow = true;
             child.receiveShadow = true;

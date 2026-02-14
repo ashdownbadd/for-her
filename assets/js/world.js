@@ -2,8 +2,6 @@ import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/
 
 export const scene = new THREE.Scene();
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 1000);
-
-// Renderer configuration with sensible defaults for low-spec PCs
 export const renderer = new THREE.WebGLRenderer({
     antialias: true,
     powerPreference: "high-performance"
@@ -11,23 +9,20 @@ export const renderer = new THREE.WebGLRenderer({
 
 const lights = {};
 
-// Simple quality heuristic based on device memory and pixel ratio
 function configureRendererForDevice() {
     const deviceMemory = (navigator && 'deviceMemory' in navigator) ? navigator.deviceMemory : 4;
     const isLowMemoryDevice = deviceMemory && deviceMemory <= 4;
-
-    // Cap pixel ratio to avoid extremely high-resolution rendering on weak GPUs
     const maxPixelRatio = isLowMemoryDevice ? 1.25 : 1.75;
     const pixelRatio = Math.min(window.devicePixelRatio || 1, maxPixelRatio);
-    renderer.setPixelRatio(pixelRatio);
 
-    // Slightly reduced shadow map size keeps shadows while lowering GPU cost
+    renderer.setPixelRatio(pixelRatio);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 }
 
 export function initScene() {
     configureRendererForDevice();
+
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 0.8;
@@ -45,7 +40,6 @@ export function initScene() {
     lights.main.castShadow = true;
     lights.main.shadow.bias = -0.0001;
     lights.main.shadow.normalBias = 0.02;
-    // Slightly smaller shadow map for better performance, still high quality
     lights.main.shadow.mapSize.width = 1024;
     lights.main.shadow.mapSize.height = 1024;
     scene.add(lights.main);
@@ -60,22 +54,30 @@ export function setAmbiance(mode) {
         scene.background.set(0xffe4d1);
         scene.fog.color.set(0xffc0cb);
         scene.fog.density = 0.015;
+
         lights.ambient.color.set(0xffe0bd);
         lights.ambient.intensity = 0.5;
-        lights.main.intensity = 3.5;
+
         lights.main.color.set(0xff9d5c);
+        lights.main.intensity = 3.5;
         lights.main.position.set(2, 3, 2);
-        lights.rim.intensity = 1.8;
+
         lights.rim.color.set(0xfff4e5);
+        lights.rim.intensity = 1.8;
+
         renderer.toneMappingExposure = 1.1;
     } else {
         scene.background.set(0x050508);
         scene.fog.color.set(0x050508);
         scene.fog.density = 0.08;
+
         lights.ambient.color.set(0x2a1b3d);
         lights.ambient.intensity = 0.5;
+
         lights.main.intensity = 2.0;
+
         lights.rim.intensity = 0.6;
+
         renderer.toneMappingExposure = 0.9;
     }
 }
