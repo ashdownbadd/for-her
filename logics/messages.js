@@ -1,17 +1,17 @@
-const MESSAGE_LOAD_TIME = new Date();
 let messageAnimationTimeouts = [];
+let firstOpenTime = null; // Store the exact moment the first message "arrives"
 
 const wait = (ms) => new Promise(resolve => {
     const timeoutId = setTimeout(resolve, ms);
     messageAnimationTimeouts.push(timeoutId);
 });
 
-function updateMessageTimestamp(appElement) {
+function updateMessageTimestamp(appElement, timeToUse) {
     const dateElement = appElement.querySelector('.messages-app__date');
     if (!dateElement) return;
 
-    let hours = MESSAGE_LOAD_TIME.getHours();
-    const minutes = MESSAGE_LOAD_TIME.getMinutes().toString().padStart(2, '0');
+    let hours = timeToUse.getHours();
+    const minutes = timeToUse.getMinutes().toString().padStart(2, '0');
     const ampm = hours >= 12 ? 'PM' : 'AM';
 
     hours = hours % 12;
@@ -22,9 +22,7 @@ function updateMessageTimestamp(appElement) {
 
 export function closeMessagesApp() {
     const app = document.getElementById('messages-app-overlay');
-    if (app) {
-        app.classList.remove('active');
-    }
+    if (app) app.classList.remove('active');
 
     messageAnimationTimeouts.forEach(clearTimeout);
     messageAnimationTimeouts = [];
@@ -39,12 +37,18 @@ export async function openMessagesApp() {
 
     app.classList.add('active');
 
+    // 1. Capture the "Received" time ONLY if this is the first time opening
+    // This ensures if you open at 11:05, it stays 11:05.
+    if (!firstOpenTime) {
+        firstOpenTime = new Date();
+    }
+
+    updateMessageTimestamp(app, firstOpenTime);
+
     const backButton = app.querySelector('.messages-app__back');
     if (backButton) {
         backButton.onclick = () => closeMessagesApp();
     }
-
-    updateMessageTimestamp(app);
 
     const bubblesContainer = app.querySelector('.messages-app__bubbles');
     const dateElement = app.querySelector('.messages-app__date');
@@ -64,6 +68,7 @@ export async function openMessagesApp() {
     for (const bubble of bubbles) {
         if (!app.classList.contains('active')) return;
 
+        // If bubbles are already visible, just show them and the date immediately
         if (bubble.classList.contains('bubble--visible')) {
             bubble.style.display = 'block';
             dateElement?.classList.add('messages-app__date--visible');
@@ -74,7 +79,7 @@ export async function openMessagesApp() {
             bubble.style.display = 'block';
             bubblesContainer.insertBefore(typingIndicator, bubble);
 
-            await wait(1800);
+            await wait(1800); // Wait for the "Typing..." feel
             typingIndicator.remove();
 
             if (!dateElement?.classList.contains('messages-app__date--visible')) {

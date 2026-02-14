@@ -1,10 +1,13 @@
 const sassLines = [
-    "Nov 21, 2023 was the start. I’m not letting you end this that easily! ✋",
-    "Every second since 2023 counts. Why would you want to lose one? 🥺",
-    "Error 404: 'Stop' button not found. Love is infinite. ❤️",
-    "I've been running for 19,000+ hours. I’m a marathon runner, not a quitter! 🏃‍♂️",
-    "Nice try! But this timer has a 'forever' clause in the contract. 📝"
+    "?",
+    "??",
+    "???",
+    "ba't mo i-stop? tagal na natin oh.",
+    "tsk tsk!"
 ];
+
+let toastTimeout;
+let currentSassIndex = 0; // Track the sequence position
 
 export function openClockApp() {
     document.getElementById('clock-app-overlay').classList.add('active');
@@ -43,19 +46,29 @@ export function showSassyToast() {
     const toast = document.getElementById('reset-denial-toast');
     if (!toast) return;
 
-    const randomLine = sassLines[Math.floor(Math.random() * sassLines.length)];
-    toast.textContent = randomLine;
+    // Reset timer if clicked repeatedly
+    clearTimeout(toastTimeout);
+
+    // Get message in sequence
+    const line = sassLines[currentSassIndex];
+
+    // Update the index for the next click (loop back to 0 if at the end)
+    currentSassIndex = (currentSassIndex + 1) % sassLines.length;
+
+    // Inject text and show
+    toast.textContent = line;
     toast.classList.add('show');
 
-    setTimeout(() => {
+    // Display for exactly 5 seconds as requested
+    toastTimeout = setTimeout(() => {
         toast.classList.remove('show');
     }, 5000);
 }
 
 export function initClockButtons() {
-    const resetBtn = document.querySelector('.stopwatch__button--lap');
     const stopBtn = document.querySelector('.stopwatch__button--stop');
 
-    if (resetBtn) resetBtn.onclick = showSassyToast;
-    if (stopBtn) stopBtn.onclick = showSassyToast;
+    if (stopBtn) {
+        stopBtn.onclick = showSassyToast;
+    }
 }

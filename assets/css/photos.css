@@ -1,3 +1,4 @@
+/* --- PHOTOS APP LIBRARY --- */
 .photos-app {
     display: flex;
     flex-direction: column;
@@ -12,22 +13,6 @@
     justify-content: space-between;
     padding: 55px 16px 20px;
     background: #000;
-}
-
-.photos-app__left,
-.photos-app__right {
-    flex: 1;
-    display: flex;
-}
-
-.photos-app__right {
-    justify-content: flex-end;
-}
-
-.photos-app__center {
-    flex: 2;
-    display: flex;
-    justify-content: center;
 }
 
 .photos-app__title {
@@ -103,14 +88,17 @@
     color: #007AFF;
 }
 
+/* --- PHOTO VIEWER (Constrained to Phone) --- */
 .photo-viewer {
     position: absolute;
+    /* Keeps it inside .phone-modal__screen */
     inset: 0;
     z-index: 200;
     display: none;
     flex-direction: column;
     background-color: #000;
     border-radius: inherit;
+    /* Matches phone rounded corners */
     overflow: hidden;
 }
 
@@ -121,35 +109,54 @@
 .photo-viewer__header {
     position: absolute;
     top: 0;
-    z-index: 10;
+    z-index: 110;
     display: flex;
     align-items: center;
     width: 100%;
     padding: 60px 16px 10px;
+    /* Aligned with status bar */
 }
 
 .photo-viewer__back {
-    background: none;
+    background: rgba(0, 0, 0, 0.3);
     border: none;
     color: #007AFF;
     font-size: 20px;
     cursor: pointer;
-}
-
-.photo-viewer__content {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.photo-viewer__content {
     flex: 1;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #000;
 }
 
-.photo-viewer__content img {
-    max-width: 100%;
-    max-height: 100%;
+.photo-viewer__slider {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+}
+
+.slider-img {
+    min-width: 100%;
+    height: 100%;
     object-fit: contain;
+    user-select: none;
+    pointer-events: none;
 }
 
-/* --- PHOTO VIEWER NAV (Scalable & Refined) --- */
+/* --- PHOTO VIEWER NAV --- */
 .photo-nav {
     position: absolute;
     bottom: 0;
@@ -158,17 +165,14 @@
     justify-content: space-between;
     width: 100%;
     padding: 20px 20px 40px;
-    /* Reduced bottom padding slightly */
-    z-index: 10;
+    z-index: 110;
 }
 
-/* Reduced Bounding Box */
 .photo-nav__item {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 28px;
-    /* Down from 32px */
     height: 28px;
     cursor: pointer;
 }
@@ -178,12 +182,11 @@
     object-fit: contain;
 }
 
-/* Refined Optical Alignment (Smaller Scale) */
+/* Optical Alignment for SF Symbols */
 .photo-nav__item img[alt="Share"] {
     width: 17px;
 }
 
-/* Slimmer */
 .photo-nav__item img[alt="Favorite"] {
     width: 19px;
 }
@@ -196,13 +199,12 @@
     width: 19px;
 }
 
+.photo-nav__item img[alt="Trash"],
 .photo-nav__item img[alt="Delete"] {
     width: 16px;
 }
 
-/* Slimmer */
-
-/* --- CONTAINERS (Scaled Down) --- */
+/* Action Containers (Pills and Circles) */
 .photo-nav__action,
 .photo-nav__group {
     display: flex;
@@ -216,18 +218,13 @@
 
 .photo-nav__action {
     width: 42px;
-    /* Down from 50px */
     height: 42px;
-    /* Down from 50px */
     border-radius: 50%;
 }
 
 .photo-nav__group {
     height: 42px;
-    /* Down from 50px */
     padding: 0 12px;
     gap: 12px;
-    /* Tighter spacing for a more "built-in" look */
     border-radius: 21px;
-    /* Matches half of height for perfect pill shape */
 }

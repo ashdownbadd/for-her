@@ -15,20 +15,60 @@
 }
 
 .part {
-    position: relative;
-    width: 100%;
+    position: absolute;
+    width: 400px;
+    /* Force hard width */
     height: 200px;
+    /* Force hard height */
     padding: 20px 40px;
+
+    /* FIX 1: Change to content-box to ensure padding doesn't mess with 3D math */
     box-sizing: border-box;
+
     background: #fef9ef;
     box-shadow: inset rgba(0, 0, 0, 0.05) 0 0 50px;
     transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* FIX 2: Stop Chrome from auto-expanding the box to hide cracks */
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    /* FIX 3: Instead of height: 201px, we use a 1px border of the same color 
+       This fills the white line but tells DevTools the height is exactly 200px */
+    outline: 1px solid #fef9ef;
+    outline-offset: -1px;
+    /* Pulls the 'extra pixel' inward so it's not 'sobra' */
 }
 
 .part1 {
     z-index: 3;
+    top: 0;
+    transform-origin: bottom;
+}
+
+.part2 {
+    z-index: 2;
+    /* Use exact 200px. If it still shows 201, use top: 199.5px to trick the sub-pixel grid */
+    top: 200px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    transform-origin: top;
+}
+
+.part3 {
+    z-index: 1;
+    top: 400px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-bottom: 30px;
+    padding-right: 40px;
     transform-origin: top;
 }
 

@@ -195,47 +195,56 @@
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </button>
                             </header>
+
                             <div class="photo-viewer__content">
-                                <img id="full-photo" src="" alt="">
+                                <div id="photo-slider" class="photo-viewer__slider">
+                                </div>
                             </div>
+
                             <nav class="photo-nav">
                                 <div class="photo-nav__action">
-                                    <div class="photo-nav__item"><img
-                                            src="assets/svg/sf-symbols/square.and.arrow.up.svg" alt="Share"></div>
+                                    <div class="photo-nav__item">
+                                        <img src="assets/svg/sf-symbols/square.and.arrow.up.svg" alt="Share">
+                                    </div>
                                 </div>
                                 <div class="photo-nav__group">
-                                    <div class="photo-nav__item"><img src="assets/svg/sf-symbols/heart.svg"
-                                            alt="Favorite"></div>
-                                    <div class="photo-nav__item"><img src="assets/svg/sf-symbols/info.circle.svg"
-                                            alt="Info"></div>
-                                    <div class="photo-nav__item"><img
-                                            src="assets/svg/sf-symbols/slider.horizontal.3.svg" alt="Edit"></div>
+                                    <div class="photo-nav__item">
+                                        <img src="assets/svg/sf-symbols/heart.svg" alt="Favorite">
+                                    </div>
+                                    <div class="photo-nav__item">
+                                        <img src="assets/svg/sf-symbols/info.circle.svg" alt="Info">
+                                    </div>
+                                    <div class="photo-nav__item">
+                                        <img src="assets/svg/sf-symbols/slider.horizontal.3.svg" alt="Edit">
+                                    </div>
                                 </div>
                                 <div class="photo-nav__action">
-                                    <div class="photo-nav__item"><img src="assets/svg/sf-symbols/trash.svg"
-                                            alt="Delete"></div>
+                                    <div class="photo-nav__item">
+                                        <img src="assets/svg/sf-symbols/trash.svg" alt="Delete">
+                                    </div>
                                 </div>
                             </nav>
                         </div>
 
                         <div id="clock-app-overlay" class="app-screen">
-                            <div id="reset-denial-toast" class="toast-bubble">
-                                We've been together since Nov. 21, 2023... and you want to STOP the clock? Not on my
-                                watch! 😤
-                            </div>
+                            <div id="reset-denial-toast" class="toast-bubble"></div>
+
                             <div class="stopwatch">
                                 <div class="stopwatch__display">
-                                    <span id="stopwatch-time" class="stopwatch__time">19244:59:22</span>
+                                    <span id="stopwatch-time" class="stopwatch__time">0:00:00</span>
                                 </div>
                                 <div class="stopwatch__controls">
                                     <button class="stopwatch__button stopwatch__button--lap">Lap</button>
+
                                     <div class="stopwatch__indicators">
                                         <span class="stopwatch__dot stopwatch__dot--active"></span>
                                         <span class="stopwatch__dot"></span>
                                     </div>
+
                                     <button class="stopwatch__button stopwatch__button--stop">Stop</button>
                                 </div>
                             </div>
+
                             <nav class="clock-nav">
                                 <div class="clock-nav__item">
                                     <img src="assets/svg/sf-symbols/globe.svg" class="clock-nav__icon" alt="World">
